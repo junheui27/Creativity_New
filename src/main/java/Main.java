@@ -16,14 +16,14 @@ public class Main {
     public static void main(String arg[]) throws IOException {
         System.out.println("start");
 
-
-        List<String> inputs = readInput();
+        // input.txt -> arg[0]
+        ArrayList<String> inputs = readInput("input.txt");
         run(inputs);
 
         System.out.println("finish");
     }
 
-    private static void run(List<String> inputs) {
+    public static void run(ArrayList<String> inputs) {
 
         for (String input : inputs){
             UserRequest request = UserRequestConverter.convert(input);
@@ -33,13 +33,15 @@ public class Main {
         }
     }
 
-    private static List<String> readInput() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("C:/Users/junheui/IdeaProjects/Creativity_New/src/input.txt"));
+    public static ArrayList<String> readInput(String str) throws IOException {
 
-        String str;
+        ArrayList<String> inputarray = new ArrayList<String>();
+        BufferedReader br = new BufferedReader(new FileReader("C:/Users/junheui/IdeaProjects/Creativity_New/src/"+str));
+        String str2 = "";
 
-        while((str = br.readLine())!=null){
-            System.out.println(str);
+        while((str2 = br.readLine())!=null){
+            inputarray.add(str2);
+
         }
         br.close();
 
