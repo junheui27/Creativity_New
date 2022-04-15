@@ -19,55 +19,43 @@ public class AddCommand implements CommandExecutor {
     	
     	//형식 : ADD,,,,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO
     	List<String> EmployeeInfo = request.getArguments();
-    	String EmployeeNum = EmployeeInfo.get(0);
-    	String EmployeeName = EmployeeInfo.get(1);
-    	String[] EmployeeFirstLastName = EmployeeName.split(" ");
-    	String EmployeeLevel = EmployeeInfo.get(2);
-    	String EmployeePhoneNum = EmployeeInfo.get(3);
-    	String[] EmployeePhoneNums = EmployeePhoneNum.split("-");
-    	String EmployeeBirth = EmployeeInfo.get(4);
-    	String EmployeeBirthYear = EmployeeBirth.substring(0,4);
-    	String EmployeeBirthMonth = EmployeeBirth.substring(4, 6);
-    	String EmployeeBirthDay = EmployeeBirth.substring(6, 8);
-    	String EmployeeCert = EmployeeInfo.get(5);
-    	
-    	CAREERLEVEL carrierLevel = null;
-    	if(EmployeeLevel.equals("CL1"))
-    		carrierLevel = CAREERLEVEL.CL1;
-    	else if(EmployeeLevel.equals("CL2"))
-    		carrierLevel = CAREERLEVEL.CL2;
-    	else if(EmployeeLevel.equals("CL3"))
-    		carrierLevel = CAREERLEVEL.CL3;
-    	else if(EmployeeLevel.equals("CL4"))
-    		carrierLevel = CAREERLEVEL.CL4;
+    	CAREERLEVEL careerLevel = null;
+    	if(EmployeeInfo.get(2).equals("CL1"))
+    		careerLevel = CAREERLEVEL.CL1;
+    	else if(EmployeeInfo.get(2).equals("CL2"))
+    		careerLevel = CAREERLEVEL.CL2;
+    	else if(EmployeeInfo.get(2).equals("CL3"))
+    		careerLevel = CAREERLEVEL.CL3;
+    	else if(EmployeeInfo.get(2).equals("CL4"))
+    		careerLevel = CAREERLEVEL.CL4;
     	
     	CERTI certi = null;
-    	if(EmployeeCert == "ADV")
+    	if(EmployeeInfo.get(5) == "ADV")
     		certi = CERTI.ADV;
-    	else if(EmployeeCert == "PRO")
+    	else if(EmployeeInfo.get(5) == "PRO")
     		certi = CERTI.PRO;
-    	else if(EmployeeCert == "EX")
+    	else if(EmployeeInfo.get(5) == "EX")
     		certi = CERTI.EX;
     	
     	Employee employee = new Employee();
-    	employee.setEmployeeNum(EmployeeNum);
-    	employee.setName(EmployeeName);
-        employee.setFirstName(EmployeeFirstLastName[0]);
-        employee.setLastName(EmployeeFirstLastName[1]);
-        employee.setMiddlePhoneNumber(EmployeePhoneNums[1]);
-        employee.setLastPhoneNumer(EmployeePhoneNums[2]);
-        employee.setCl(carrierLevel);
-        employee.setBirthdayYear(EmployeeBirthYear);
-        employee.setBirthdayMonth(EmployeeBirthMonth);
-        employee.setBirthdayDay(EmployeeBirthDay);
+    	employee.setEmployeeNum(EmployeeInfo.get(0));
+    	employee.setName(EmployeeInfo.get(1));
+        employee.setFirstName(EmployeeInfo.get(1).split(" ")[0]);
+        employee.setLastName(EmployeeInfo.get(1).split(" ")[1]);
+        employee.setMiddlePhoneNumber(EmployeeInfo.get(3).split("-")[1]);
+        employee.setLastPhoneNumer(EmployeeInfo.get(3).split("-")[2]);
+        employee.setCl(careerLevel);
+        employee.setBirthdayYear(EmployeeInfo.get(4).substring(0,4));
+        employee.setBirthdayMonth(EmployeeInfo.get(4).substring(4, 6));
+        employee.setBirthdayDay(EmployeeInfo.get(4).substring(6, 8));
         employee.setCerti(certi);
     	
         
         db.addEmployee(employee);
         
-        List<Employee> temp = new ArrayList<>();
-        temp.add(employee);
+        List<Employee> employeeArr = new ArrayList<>();
+        employeeArr.add(employee);
         
-        return temp;
+        return employeeArr;
     }
 }
