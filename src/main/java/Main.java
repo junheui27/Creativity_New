@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
     public static EmployeeManager manager = new EmployeeManager();
 
     public static void main(String arg[]) throws IOException {
