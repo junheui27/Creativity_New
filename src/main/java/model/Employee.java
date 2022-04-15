@@ -10,11 +10,13 @@ public class Employee {
     String name;
     String firstName;
     String lastName;
+    String phoneNumber;
     String middlePhoneNumber;
     String lastPhoneNumer;
     CAREERLEVEL cl;
-    Integer birthdayYear;
-    Integer birthdayMonth;
-    Integer birthdayDay;
+    String birthday;
+    String birthdayYear;
+    String birthdayMonth;
+    String birthdayDay;
     CERTI certi;
 }
