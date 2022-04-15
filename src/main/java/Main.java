@@ -35,7 +35,7 @@ public class Main {
 
     public static ArrayList<String> readInput(String str) throws IOException {
 
-        ArrayList<String> inputarray = new ArrayList<String>();
+        ArrayList<String> inputarray = new ArrayList();
         BufferedReader br = new BufferedReader(new FileReader("C:/Users/junheui/IdeaProjects/Creativity_New/src/"+str));
         String str2 = "";
 
@@ -45,6 +45,6 @@ public class Main {
         }
         br.close();
 
-        return new ArrayList<String>();
+        return inputarray;
     }
 }
