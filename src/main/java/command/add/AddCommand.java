@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AddCommand implements CommandExecutor {
     @Override
-    public List<Employee> run(UserRequest request, EmployeeDB db) {
+    public List<Employee> run(UserRequest request, EmployeeDB db) throws Exception {
     	if(request == null || db == null)
     		return new ArrayList();
     	
@@ -29,13 +29,7 @@ public class AddCommand implements CommandExecutor {
     	else if(EmployeeInfo.get(2).equals("CL4"))
     		careerLevel = CAREERLEVEL.CL4;
     	
-    	CERTI certi = null;
-    	if(EmployeeInfo.get(5) == "ADV")
-    		certi = CERTI.ADV;
-    	else if(EmployeeInfo.get(5) == "PRO")
-    		certi = CERTI.PRO;
-    	else if(EmployeeInfo.get(5) == "EX")
-    		certi = CERTI.EX;
+    	CERTI certi = initialiseCerti(EmployeeInfo);
     	
     	Employee employee = new Employee();
     	employee.setEmployeeNum(EmployeeInfo.get(0));
@@ -50,12 +44,28 @@ public class AddCommand implements CommandExecutor {
         employee.setBirthdayDay(EmployeeInfo.get(4).substring(6, 8));
         employee.setCerti(certi);
     	
+        if(employee.getEmployeeNum().length() > 8) {
+        	throw new Exception();
+        }
         
-        db.addEmployee(employee);
+        if(!db.addEmployee(employee)) {
+        	throw new Exception();
+        }
         
         List<Employee> employeeArr = new ArrayList<>();
         employeeArr.add(employee);
         
         return employeeArr;
     }
+
+	private CERTI initialiseCerti(List<String> EmployeeInfo) {
+		CERTI certi = null;
+    	if(EmployeeInfo.get(5) == "ADV")
+    		certi = CERTI.ADV;
+    	else if(EmployeeInfo.get(5) == "PRO")
+    		certi = CERTI.PRO;
+    	else if(EmployeeInfo.get(5) == "EX")
+    		certi = CERTI.EX;
+		return certi;
+	}
 }

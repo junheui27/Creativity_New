@@ -12,7 +12,7 @@ public class Main {
 
     public static EmployeeManager manager = new EmployeeManager();
 
-    public static void main(String arg[]) throws IOException {
+    public static void main(String arg[]) throws Exception {
         System.out.println("start");
 
         List<String> inputs = readInput();
@@ -21,7 +21,7 @@ public class Main {
         System.out.println("finish");
     }
 
-    private static void run(List<String> inputs) {
+    private static void run(List<String> inputs) throws Exception {
 
         for (String input : inputs){
             UserRequest request = UserRequestConverter.convert(input);
