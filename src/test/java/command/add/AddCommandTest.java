@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import command.CommandExecutor;
@@ -24,6 +25,7 @@ class AddCommandTest {
 		addCommand = new AddCommand();
 	}
 	@Test
+	@DisplayName("[정상Case] 정상적으로 User정보 add 후 반환 되는지")
 	void runTestSuccess1() {
 		UserRequest ur = new UserRequest();
 		ArrayList<String> ArgumentList = new ArrayList();
@@ -50,6 +52,7 @@ class AddCommandTest {
 	}
 	
 	@Test
+	@DisplayName("[비정상Case] run 함수에 인자가 null이 들어갈 경우")
 	void runTestFail1() {
 		UserRequest ur = new UserRequest();
 		ArrayList<String> ArgumentList = new ArrayList();
