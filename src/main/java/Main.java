@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class Main {
-
     public static EmployeeManager manager = new EmployeeManager();
     private static String loadPath ="";
     private static String SavePath ="";
 
-    public static void main(String arg[]) throws IOException {
+    public static void main(String arg[]) throws Exception {
         System.out.println("start");
 
         loadPath = arg[0];
@@ -36,8 +35,7 @@ public class Main {
     	return Pattern.matches(regx, str);
     }
 
-    public static List<String> run(List<String> inputs){
-
+    private static void run(List<String> inputs) throws Exception {
         for (String input : inputs){
             //UserRequest request = UserRequestConverter.convert(input);
             //manager.process(request);
