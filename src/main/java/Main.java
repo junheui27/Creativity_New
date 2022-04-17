@@ -5,54 +5,66 @@ import model.UserRequestConverter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Main {
 
     public static EmployeeManager manager = new EmployeeManager();
-    private String loadPath ="";
-    private String SavePath ="";
+    private static String loadPath ="";
+    private static String SavePath ="";
 
     public static void main(String arg[]) throws IOException {
         System.out.println("start");
 
-        // loadPath = arg[0];
-        // savePath = arg[1];
-        // input.txt -> arg[0]
-        ArrayList<String> inputs = readInput("input.txt");
-        ArrayList<String> outputs = run(inputs);
-        writeOutput("output.txt",outputs);
+        loadPath = arg[0];
+        SavePath = arg[1];
+        List<String> inputs = readInput(loadPath);
+        List<String> outputs = run(inputs);
+        writeOutput("SavePath",outputs);
 
         System.out.println("finish");
     }
-
-    public static ArrayList<String> run(ArrayList<String> inputs){
-
-        for (String input : inputs){
-            UserRequest request = UserRequestConverter.convert(input);
-            manager.process(request);
-        }
-        return null;
+    
+    static boolean isValidInputFormatTrue(String str) {
+    	String regx = "^[A-Z]{3}\\,.*";
+    	return Pattern.matches(regx, str);
     }
 
-    public static ArrayList<String> readInput(String str) throws IOException {
 
-        ArrayList<String> inputArray = new ArrayList();
+    static boolean isValidOutputFormatTrue(String str) {
+    	String regx = "^[A-Z]{3}\\,.*";
+    	return Pattern.matches(regx, str);
+    }
+
+    public static List<String> run(List<String> inputs){
+
+        for (String input : inputs){
+            //UserRequest request = UserRequestConverter.convert(input);
+            //manager.process(request);
+        }
+        return inputs;
+    }
+
+    public static List<String> readInput(String str) throws IOException {
+
+        List<String> inputArray = new ArrayList();
         BufferedReader br = new BufferedReader(new FileReader("./"+str));
         String str2 = "";
 
         while((str2 = br.readLine())!=null){
-            inputArray.add(str2);
+            if(isValidInputFormatTrue(str2))
+            	inputArray.add(str2);
         }
         br.close();
 
         return inputArray;
     }
 
-    public static  void writeOutput(String str, ArrayList<String> outputs) throws IOException {
+    public static  void writeOutput(String str, List<String> outputs) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter("./" + str));
 
         for(String str2 : outputs){
-            bw.write(str2);
+            bw.write(str2 + "\n");
         }
         bw.flush();
         bw.close();

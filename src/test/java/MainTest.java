@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,8 +10,8 @@ class MainTest {
     @Test
     void readInputTest() throws IOException {
         String str = "input.txt";
-        ArrayList<String> array = Main.readInput(str);
-        ArrayList<String> result = new ArrayList();
+        List<String> array = Main.readInput(str);
+        List<String> result = new ArrayList();
         result.add("ADD,,,,99000101,A LEE,CL3,010-1234-5678,19920101,PRO");
         result.add("ADD,,,,99100201,B KIM,CL3,010-2341-5678,19910202,ADV");
         result.add("ADD,,,,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
@@ -39,10 +40,10 @@ class MainTest {
     }
 
     @Test
-    void writeOutputTest() throws IOException {
-        ArrayList<String> array = Main.readInput("input.txt");
-        ArrayList<String> outputs = Main.run(array);
-        ArrayList<String> result = new ArrayList();
+    void runTest() throws IOException {
+        List<String> array = Main.readInput("input.txt");
+        List<String> outputs = Main.run(array);
+        List<String> result = new ArrayList();
         result.add("SCH,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
         result.add("DEL,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
         result.add("SCH,NONE");
@@ -57,8 +58,30 @@ class MainTest {
         result.add("SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO");
         result.add("SCH,99100202,BB KIM,CL4,010-2341-5679,19920202,PRO");
 
+        /* 기능 구현 이전 테스트 코드만 작성 실행 X
         for(int i =0 ; i < outputs.size(); i++){
             assertEquals(outputs.get(i), result.get(i));
         }
+        */
+    }
+    
+    @Test
+    void WriteTest() throws IOException {
+        List<String> result = new ArrayList();
+        result.add("SCH,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
+        result.add("DEL,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
+        result.add("SCH,NONE");
+        result.add("MOD,00000302,CC CHOI,CL3,010-3412-5679,19950403,ADV");
+        result.add("SCH,2");
+        result.add("DEL,2");
+        result.add("MOD,09000302,FF MOON,CL1,010-1234-6666,19901131,ADV");
+        result.add("MOD,21000301,E KANG,CL1,010-1234-6785,19990111,ADV");
+        result.add("MOD,21000302,EE KANG,CL1,010-1234-6789,20000111,ADV");
+        result.add("DEL,99000102,AA LEE,CL4,010-1234-5679,19930101,EX");
+        result.add("MOD,00000302,CC CHOI,CL3,010-1111-2222,19950403,ADV");
+        result.add("SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO");
+        result.add("SCH,99100202,BB KIM,CL4,010-2341-5679,19920202,PRO");
+
+        Main.writeOutput("output.txt",result);
     }
 }
