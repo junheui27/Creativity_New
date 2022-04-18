@@ -3,8 +3,8 @@ package printer;
 import model.COMMAND;
 import model.Employee;
 import model.UserRequest;
-import printer.BriefPrint.DetailPrint;
-import printer.DetailPrint.BriefPrint;
+import printer.DetailPrint.DetailPrint;
+import printer.BriefPrint.BriefPrint;
 import printer.NonePrint.NonePrint;
 
 import java.util.List;

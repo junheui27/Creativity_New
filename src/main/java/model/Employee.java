@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class Employee {
+public class Employee implements Comparable<Employee>{
     String employeeNum;
     String name;
     String firstName;
@@ -56,5 +56,11 @@ public class Employee {
         setPhoneNumber(employee.getPhoneNumber());
         setLastPhoneNumer(employee.getLastPhoneNumer());
         setMiddlePhoneNumber(employee.getMiddlePhoneNumber());
+    }
+    @Override
+    public int compareTo(Employee o) {
+        //return o.getEmployeeNum().compareTo(getEmployeeNum());
+        return getEmployeeNum().compareTo(o.getEmployeeNum());
+
     }
 }

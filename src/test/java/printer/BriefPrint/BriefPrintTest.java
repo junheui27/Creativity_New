@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import printer.DetailPrint.BriefPrint;
 import printer.IPrintOption;
 
 import java.io.ByteArrayOutputStream;
@@ -15,6 +14,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
+
 
 public class BriefPrintTest {
 
