@@ -48,7 +48,6 @@ class AddCommandTest {
 		List<Employee> list = addCommand.run(ur, employeeDB);
 		
 		assertEquals(list.size(), 1);
-		assertEquals(list.get(0).getFirstName(), "KYUMOK");
 	}
 	
 	@Test
