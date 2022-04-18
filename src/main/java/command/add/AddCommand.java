@@ -53,7 +53,7 @@ public class AddCommand implements CommandExecutor {
         	throw new Exception();
         }
         
-        List<Employee> employeeArr = new ArrayList<>();
+        List<Employee> employeeArr = new ArrayList<Employee>();
         employeeArr.add(employee);
         
         return employeeArr;
