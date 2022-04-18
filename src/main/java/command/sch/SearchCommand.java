@@ -84,7 +84,6 @@ public class SearchCommand implements CommandExecutor, SearchOptionI {
             default:
                 return searchPhoneNumber(reqObj.value, db);
         }
-        ss
     }
 
     private List<Employee> searchByName(EmployeeDB db, ReqObj reqObj) {
