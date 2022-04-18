@@ -34,7 +34,15 @@ public class AddCommand implements CommandExecutor {
     	Employee employee = new Employee();
     	employee.setEmployeeNum(EmployeeInfo.get(0));
     	employee.setName(EmployeeInfo.get(1));
+        employee.setFirstName(EmployeeInfo.get(1).split(" ")[0]);
+        employee.setLastName(EmployeeInfo.get(1).split(" ")[1]);
+        employee.setPhoneNumber(EmployeeInfo.get(3));
+        employee.setMiddlePhoneNumber(EmployeeInfo.get(3).split("-")[1]);
+        employee.setLastPhoneNumer(EmployeeInfo.get(3).split("-")[2]);
         employee.setCl(careerLevel);
+        employee.setBirthdayYear(EmployeeInfo.get(4).substring(0,4));
+        employee.setBirthdayMonth(EmployeeInfo.get(4).substring(4, 6));
+        employee.setBirthdayDay(EmployeeInfo.get(4).substring(6, 8));
         employee.setCerti(certi);
     	
         if(employee.getEmployeeNum().length() > 8) {
@@ -45,7 +53,7 @@ public class AddCommand implements CommandExecutor {
         	throw new Exception();
         }
         
-        List<Employee> employeeArr = new ArrayList<>();
+        List<Employee> employeeArr = new ArrayList<Employee>();
         employeeArr.add(employee);
         
         return employeeArr;
