@@ -61,7 +61,7 @@ public class SearchCommand implements CommandExecutor, SearchOptionI {
 
 
     private List<Employee> searchByBirth(EmployeeDB db, ReqObj reqObj) {
-        // -y / -m / -d :  생년월일의 연도로 검색 / -m : 생년월일의 월로 검색 / -d : 생년월일의 일로 검색
+        // -y / -m / -d :  ìƒ�ë…„ì›”ì�¼ì�˜ ì—°ë�„ë¡œ ê²€ìƒ‰ / -m : ìƒ�ë…„ì›”ì�¼ì�˜ ì›”ë¡œ ê²€ìƒ‰ / -d : ìƒ�ë…„ì›”ì�¼ì�˜ ì�¼ë¡œ ê²€ìƒ‰
         switch (reqObj.option) {
             case "-y":
                 return searchBirthYear(reqObj.value, db);
@@ -75,7 +75,7 @@ public class SearchCommand implements CommandExecutor, SearchOptionI {
     }
 
     private List<Employee> searchByPhoneNum(EmployeeDB db, ReqObj reqObj) {
-        // -m / -l : 	전화 번호 중간 자리로 검색 / -l : 전화 번호 뒷자리로 검색
+        // -m / -l : 	ì „í™” ë²ˆí˜¸ ì¤‘ê°„ ìž�ë¦¬ë¡œ ê²€ìƒ‰ / -l : ì „í™” ë²ˆí˜¸ ë’·ìž�ë¦¬ë¡œ ê²€ìƒ‰
         switch (reqObj.option) {
             case "-m":
                 return searchPhoneNumberMid(reqObj.value, db);
@@ -84,10 +84,11 @@ public class SearchCommand implements CommandExecutor, SearchOptionI {
             default:
                 return searchPhoneNumber(reqObj.value, db);
         }
+        ss
     }
 
     private List<Employee> searchByName(EmployeeDB db, ReqObj reqObj) {
-        // -f / -l:  	성명의 이름으로 검색 / -l : 성명의 성으로 검색
+        // -f / -l:  	ì„±ëª…ì�˜ ì�´ë¦„ìœ¼ë¡œ ê²€ìƒ‰ / -l : ì„±ëª…ì�˜ ì„±ìœ¼ë¡œ ê²€ìƒ‰
         switch (reqObj.option) {
             case "-f":
                 return searchFirstName(reqObj.value, db);
