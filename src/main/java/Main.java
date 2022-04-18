@@ -18,12 +18,27 @@ public class Main {
 
         loadPath = arg[0];
         SavePath = arg[1];
-        List<String> inputs = readInput(loadPath);
-        List<String> outputs = run(inputs);
-        writeOutput("SavePath",outputs);
+        List<String> inputs = new ArrayList<String>();
+        
+        if(isValidInputFileExistTrue(loadPath)) 
+        {
+        	inputs = readInput(loadPath);
+            List<String> outputs = run(inputs);
+            
+            
+            writeOutput("SavePath",outputs);
+        }
 
         System.out.println("finish");
     }
+    
+
+    static boolean isValidInputFileExistTrue(String str) {
+    	File file = new File("./"+str); 
+    	return file.exists();
+    }
+
+
     
     static boolean isValidInputFormatTrue(String str) {
     	String regx = "^[A-Z]{3}\\,.*";
