@@ -3,6 +3,7 @@ package printer;
 import model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -100,7 +101,8 @@ public class EmployeePrinterTest {
     }
 
     @Test
-    void 결과row가_0개일때_출력테스트(){
+    @DisplayName("결과row가_0개일때")
+    void resultsZero(){
 
         //db내 데이터 없음
         results=new ArrayList<>();
@@ -115,7 +117,8 @@ public class EmployeePrinterTest {
 
 
     @Test
-    void 결과row가_1개이상일때_p옵션시_출력테스트(){
+    @DisplayName("결과row가 5개이상일때 P옵션 사용시")
+    void resultsMoreThanFive(){
 
         results=new ArrayList<>();
         results.add(employee1);
@@ -142,7 +145,8 @@ public class EmployeePrinterTest {
     }
 
     @Test
-    void 결과row가_1개이상일때_p옵션없을시_출력테스트(){
+    @DisplayName("결과row가 5개이상일때 p옵션없을시")
+    void resultsExceptPOption(){
 
         results=new ArrayList<>();
         results.add(employee1);
