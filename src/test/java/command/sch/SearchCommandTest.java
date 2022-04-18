@@ -118,15 +118,13 @@ class SearchCommandTest {
     @Test
     void searchByEmpNumTest() {
 
-
-
         RequestObj obj = new RequestObj("employeeNum","77777777", "");
-        list = sc.searchByEmpNum(obj,db);;
+        list = sc.SearchEmployeeList(obj,db);;
         assertEquals(1,list.size());
         assertEquals("JIWON SEO",list.get(0).getName());
 
         RequestObj obj2= new RequestObj("employeeNum","66666666", "");
-        list = sc.searchByEmpNum(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(1,list.size());
         assertEquals("DOWON LEE",list.get(0).getName());
     }
@@ -134,12 +132,12 @@ class SearchCommandTest {
     @Test
     void searchByNameTest(){
         RequestObj obj = new RequestObj("name","BLACKDEV LEE", "");
-        list = sc.searchByName(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(1,list.size());
         assertEquals("22222220",list.get(0).getBirthday());
 
         RequestObj obj2= new RequestObj("name","SW SMILE", "");
-        list = sc.searchByName(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(1,list.size());
         assertEquals("010-4444-5555",list.get(0).getPhoneNumber());
     }
@@ -147,12 +145,12 @@ class SearchCommandTest {
     @Test
     void searchByFirstNameTest() {
         RequestObj obj = new RequestObj("name","SW", "-f");
-        list = sc.searchByName(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(2,list.size());
         assertEquals("SW SMILE_SW SMIL",list.get(0).getName()+"_"+list.get(1).getName());
 
         RequestObj obj2= new RequestObj("name","SEO", "-f");
-        list = sc.searchByName(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(1,list.size());
         assertEquals("SEO JIOWN",list.get(0).getName());
 
@@ -160,7 +158,7 @@ class SearchCommandTest {
     @Test
     void searchByLastNameTest() {
         RequestObj obj = new RequestObj("name","LEE", "-l");
-        list = sc.searchByName(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(4,list.size());
         int ans = 0;
         for(Employee emp: list){
@@ -172,12 +170,12 @@ class SearchCommandTest {
     @Test
     void searchByPhoneNumber(){
         RequestObj obj = new RequestObj("phoneNum","010-2222-3333", "");
-        list = sc.searchByPhoneNumber(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(1,list.size());
         assertEquals("BLACKDEV LEE",list.get(0).getName());
 
         RequestObj obj2 = new RequestObj("phoneNum","010-7777-8588", "");
-        list = sc.searchByPhoneNumber(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(4,list.size());
     }
 
@@ -185,12 +183,12 @@ class SearchCommandTest {
     @Test
     void searchByPhoneNumberMidTest() {
         RequestObj obj = new RequestObj("phoneNum","4444", "-m");
-        list = sc.searchByPhoneNumber(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(2,list.size());
         assertEquals("SW SMILE JUNHEUI LEE",list.get(0).getName() + " " + list.get(1).getName());
 
         RequestObj obj2 = new RequestObj("phoneNum","3333", "-m");
-        list = sc.searchByPhoneNumber(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(1,list.size());
         assertEquals("LEE WHITEDEV",list.get(0).getName() );
     }
@@ -198,51 +196,51 @@ class SearchCommandTest {
     @Test
     void searchByPhoneNumberLastTest() {
         RequestObj obj = new RequestObj("phoneNum","4444", "-l");
-        list = sc.searchByPhoneNumber(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(1,list.size());
         assertEquals("LEE WHITEDEV",list.get(0).getName());
 
         RequestObj obj2 = new RequestObj("phoneNum","8588", "-l");
-        list = sc.searchByPhoneNumber(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(4,list.size());
     }
 
     @Test
     void searchByClTest() {
         RequestObj obj = new RequestObj("cl","CL3", "");
-        list = sc.searchByCl(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(1,list.size());
         assertEquals("DOWON LEE",list.get(0).getName());
 
         RequestObj obj2 = new RequestObj("cl","CL4", "");
-        list = sc.searchByCl(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(4,list.size());
 
         RequestObj obj3 = new RequestObj("cl","CL2", "");
-        list = sc.searchByCl(obj3,db);
+        list = sc.SearchEmployeeList(obj3,db);
         assertEquals(5,list.size());
     }
 
     @Test
     void searchByBirthday(){
         RequestObj obj = new RequestObj("birthday","22222220", "");
-        list = sc.searchByBirthday(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(1,list.size());
         assertEquals("22222222",list.get(0).getEmployeeNum());
 
         RequestObj obj2 = new RequestObj("birthday","22222221", "");
-        list = sc.searchByBirthday(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(0,list.size());
     }
 
     @Test
     void searchByBirthdayYearTest() {
         RequestObj obj = new RequestObj("birthday","8888", "-y");
-        list = sc.searchByBirthday(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(5,list.size());
 
         RequestObj obj2 = new RequestObj("birthday","2222", "-y");
-        list = sc.searchByBirthday(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(1,list.size());
         assertEquals(CAREERLEVEL.CL2,list.get(0).getCl());
 
@@ -251,11 +249,11 @@ class SearchCommandTest {
     @Test
     void searchByBirthdayMonthTest() {
         RequestObj obj = new RequestObj("birthday","44", "-m");
-        list = sc.searchByBirthday(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(2,list.size());
 
         RequestObj obj2 = new RequestObj("birthday","22", "-m");
-        list = sc.searchByBirthday(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(1,list.size());
         assertEquals("22222222",list.get(0).getEmployeeNum());
     }
@@ -263,11 +261,11 @@ class SearchCommandTest {
     @Test
     void searchByBirthdayDayTest() {
         RequestObj obj = new RequestObj("birthday","44", "-m");
-        list = sc.searchByBirthday(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(2,list.size());
 
         RequestObj obj2 = new RequestObj("birthday","22", "-m");
-        list = sc.searchByBirthday(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(1,list.size());
         assertEquals("22222222",list.get(0).getEmployeeNum());
     }
@@ -275,16 +273,16 @@ class SearchCommandTest {
     @Test
     void searchByCertiTest() {
         RequestObj obj = new RequestObj("certi","EX", "");
-        list = sc.searchByCerti(obj,db);
+        list = sc.SearchEmployeeList(obj,db);
         assertEquals(1,list.size());
         assertEquals("SW SMIL",list.get(0).getName());
 
         RequestObj obj2 = new RequestObj("certi","ADV", "");
-        list = sc.searchByBirthday(obj2,db);
+        list = sc.SearchEmployeeList(obj2,db);
         assertEquals(8,list.size());
 
         RequestObj obj3= new RequestObj("certi","PRO", " ");
-        list = sc.searchByBirthday(obj3,db);
+        list = sc.SearchEmployeeList(obj3,db);
         assertEquals(1,list.size());
         assertEquals("11111111",list.get(0).getEmployeeNum());
     }
