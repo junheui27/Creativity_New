@@ -16,79 +16,29 @@ public class EmployeeDB {
     final private HashMap<String, HashMap<String,Employee>> birthHash = new HashMap<>();
     final private HashMap<String, HashMap<String,Employee>> certiHash = new HashMap<>();
 
-    public boolean addEmployee(Employee newEmployee){
+    final String columnEmployeeNum = "employeeNum";
+    final String columnName = "name";
+    final String columnPhoneNum = "phoneNum";
+    final String columnCareerLevel = "cl";
+    final String columnBirthDay = "birthday";
+    final String columnCerti = "certi";
 
-        if(IsAlreadyInDatabase(newEmployee))
+    public boolean addEmployee(Employee newEmployee) {
+
+        if (IsAlreadyInDatabase(newEmployee))
             return false;
 
         Employee employeeToAdd = newEmployee.Copy();
         String id = employeeToAdd.getEmployeeNum();
-        idHash.put(id,employeeToAdd);
+        idHash.put(id, employeeToAdd);
 
-        AddToNameTable(employeeToAdd);
-        AddToPhoneHash(employeeToAdd);
-        AddToCLHash(employeeToAdd);
-        AddToBirthHash(employeeToAdd);
-        AddToCertiHash(employeeToAdd);
+        AddToColumnHash(columnName, employeeToAdd.getName(), employeeToAdd);
+        AddToColumnHash(columnPhoneNum, employeeToAdd.getPhoneNumber(), employeeToAdd);
+        AddToColumnHash(columnBirthDay, employeeToAdd.getBirthday(), employeeToAdd);
+        AddToColumnHash(columnCerti, employeeToAdd.getCerti().toString(), employeeToAdd);
+        AddToColumnHash(columnCareerLevel, employeeToAdd.getCl().toString(), employeeToAdd);
 
         return true;
-    }
-
-    private void AddToNameTable(Employee employeeToAdd) {
-        String name = employeeToAdd.getName();
-        if(name == null || name.isEmpty())
-            return;
-
-        if(!nameHash.containsKey(name)){
-            nameHash.put(name,new HashMap<>());
-        }
-        nameHash.get(name).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
-    }
-    private void AddToPhoneHash(Employee employeeToAdd) {
-        String phone = employeeToAdd.getPhoneNumber();
-        if(phone == null || phone.isEmpty())
-            return;
-
-        if(!phoneNumberHash.containsKey(phone)){
-            phoneNumberHash.put(phone,new HashMap<>());
-        }
-        phoneNumberHash.get(phone).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
-    }
-    private void AddToCLHash(Employee employeeToAdd) {
-        String cl = employeeToAdd.getCl().toString();
-        if(cl == null || cl.isEmpty())
-            return;
-
-        if(!careerLevelHash.containsKey(cl)){
-            careerLevelHash.put(cl,new HashMap<>());
-        }
-        careerLevelHash.get(cl).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
-    }
-
-    private void AddToBirthHash(Employee employeeToAdd) {
-        String birth = employeeToAdd.getBirthday();
-        if(birth == null || birth.isEmpty())
-            return;
-
-        if(!birthHash.containsKey(birth)){
-            birthHash.put(birth,new HashMap<>());
-        }
-        birthHash.get(birth).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
-    }
-
-    private void AddToCertiHash(Employee employeeToAdd) {
-        String certi = employeeToAdd.getCerti().toString();
-        if(certi == null || certi.isEmpty())
-            return;
-
-        if(!certiHash.containsKey(certi)){
-            certiHash.put(certi,new HashMap<>());
-        }
-        certiHash.get(certi).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
-    }
-
-    private boolean IsAlreadyInDatabase(Employee newEmployee) {
-        return idHash.containsKey(newEmployee.getEmployeeNum());
     }
 
     public Employee deleteEmployee(Employee deleteEmployee){
@@ -98,9 +48,11 @@ public class EmployeeDB {
             return new Employee();
 
         Employee removed = idHash.remove(id);
-        if(nameHash.containsKey(removed.getName())){
-            nameHash.get(removed.getName()).remove(id);
-        }
+        deleteFromHash(columnName,removed.getName(),id);
+        deleteFromHash(columnPhoneNum,removed.getPhoneNumber(),id);
+        deleteFromHash(columnBirthDay,removed.getBirthday(),id);
+        deleteFromHash(columnCerti,removed.getCerti().toString(),id);
+        deleteFromHash(columnCareerLevel,removed.getCl().toString(),id);
 
         return removed; //삭제된 node
     }
@@ -109,20 +61,62 @@ public class EmployeeDB {
     public Employee findEmployeeById(String employeeNum){
 
         if(idHash.containsKey(employeeNum)){
-            return idHash.get(employeeNum);
+            return idHash.get(employeeNum).Copy();
         }
         return new Employee();
     }
 
     public List<Employee> findEmployeeByColumn(String columnName, String value){
-        if(columnName.equals("employeeNum")){
+        if(columnName.equals(columnEmployeeNum)){
             Employee found = findEmployeeById(value);
             return Arrays.asList(found);
         }
 
-        List<Employee> foundList = getEmployFromIndexedColumn(columnName, value);
+        return getEmployFromIndexedColumn(columnName, value);
+    }
 
-        return foundList;
+    //ToDo 다양한 필드의 수정을 어떻게 이해하기 쉽게 구현할지
+    public Employee modifyEmployee(String employeeNum, Employee modifiedEmployee){
+
+        if(!idHash.containsKey(employeeNum)){
+            return new Employee();
+        }
+
+        Employee found = idHash.get(employeeNum);
+        Employee backup = found.Copy();
+        this.deleteEmployee(backup);
+
+        found.Merge(modifiedEmployee);
+        this.addEmployee(found);
+
+        return backup; //수정 전 상태를 반환
+    }
+
+    private void AddToColumnHash(String columnName,String value,Employee employeeToAdd){
+        if(value == null || value.isEmpty())
+            return;
+
+        HashMap<String, HashMap<String,Employee>> hash = getHash(columnName);
+        if(!hash.containsKey(value)){
+            hash.put(value,new HashMap<>());
+        }
+
+        hash.get(value).put(employeeToAdd.getEmployeeNum(),employeeToAdd);
+    }
+
+    private boolean IsAlreadyInDatabase(Employee newEmployee) {
+        return idHash.containsKey(newEmployee.getEmployeeNum());
+    }
+
+    private void deleteFromHash(String columnName, String value, String id) {
+        HashMap<String, HashMap<String,Employee>> hash = getHash(columnName);
+        if(!hash.containsKey(value))
+            return;
+
+        hash.get(value).remove(id);
+
+        if(hash.get(value).size() == 0)
+            hash.remove(value);
     }
 
     private List<Employee> getEmployFromIndexedColumn(String columnName, String value) {
@@ -140,26 +134,18 @@ public class EmployeeDB {
         return foundList;
     }
 
-    private HashMap<String, HashMap<String,Employee>> getHash(String columnName){
-        if(columnName.equals("name"))
+    private HashMap<String, HashMap<String,Employee>> getHash(String column){
+        if(column.equals(columnName))
             return nameHash;
-        if(columnName.equals("cl"))
+        if(column.equals(columnCareerLevel))
             return careerLevelHash;
-        if(columnName.equals("phoneNum"))
+        if(column.equals(columnPhoneNum))
             return phoneNumberHash;
-        if(columnName.equals("birthday"))
+        if(column.equals(columnBirthDay))
             return birthHash;
-        if(columnName.equals("certi"))
+        if(column.equals(columnCerti))
             return certiHash;
 
         return new HashMap<>();
-    }
-
-    //ToDo 다양한 필드의 수정을 어떻게 이해하기 쉽게 구현할지
-    public Employee modifyEmployee(String employeeNum, Employee modifiedEmployee){
-        Employee found = findEmployeeById(employeeNum);
-        Employee backup = found.Copy();
-        found.Merge(modifiedEmployee);
-        return backup; //수정 전 상태를 반환
     }
 }
