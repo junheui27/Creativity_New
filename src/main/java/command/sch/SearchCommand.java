@@ -9,8 +9,20 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class SearchCommand implements CommandExecutor,SearchOptionI{
+class RequestObj {
+    String key;
+    String value;
+    String option;
 
+    RequestObj(String key, String value, String option) {
+        this.key = key;
+        this.value = value;
+        this.option = option;
+    }
+}
+
+
+public class SearchCommand implements CommandExecutor,SearchOptionI{
 
     @Override
     public List<Employee> run(UserRequest request, EmployeeDB db) {
@@ -20,7 +32,6 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
             RequestObj reqObj = makeReqObj(request);
             resultEmpList = SearchEmployeeList(reqObj, db);
         }
-
         return resultEmpList;
     }
 
