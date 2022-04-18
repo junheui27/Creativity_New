@@ -66,7 +66,7 @@ public class EmployeeDBTest {
     public void addTest(){
 
         boolean ret = db.addEmployee(defaultEmployee);
-        Employee found = db.findEmployee("17041177");
+        Employee found = db.findEmployeeById("17041177");
 
         Assertions.assertTrue(found.equals(defaultEmployee));
     }
@@ -80,7 +80,7 @@ public class EmployeeDBTest {
         sameName.setEmployeeNum("11111111");
         db.addEmployee(sameName);
 
-        Employee found = db.findEmployee("17041177");
+        Employee found = db.findEmployeeById("17041177");
 
         Assertions.assertTrue(found.equals(defaultEmployee));
     }
@@ -101,7 +101,7 @@ public class EmployeeDBTest {
         boolean ret = db.addEmployee(defaultEmployee);
         Employee removed = db.deleteEmployee(defaultEmployee);
 
-        Employee found = db.findEmployee("17041177");
+        Employee found = db.findEmployeeById("17041177");
         Assertions.assertTrue(found.equals(new Employee()));
         Assertions.assertEquals(defaultEmployee,removed);
     }

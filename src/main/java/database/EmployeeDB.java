@@ -1,10 +1,9 @@
 package database;
 
-import model.CAREERLEVEL;
-import model.CERTI;
 import model.Employee;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,7 +106,7 @@ public class EmployeeDB {
     }
 
     //ToDo 다양한 필드의 검색을 어떻게 이해하기 쉽게 지원할지
-    public Employee findEmployee(String employeeNum){
+    public Employee findEmployeeById(String employeeNum){
 
         if(idHash.containsKey(employeeNum)){
             return idHash.get(employeeNum);
@@ -116,6 +115,17 @@ public class EmployeeDB {
     }
 
     public List<Employee> findEmployeeByColumn(String columnName, String value){
+        if(columnName.equals("employeeNum")){
+            Employee found = findEmployeeById(value);
+            return Arrays.asList(found);
+        }
+
+        List<Employee> foundList = getEmployFromIndexedColumn(columnName, value);
+
+        return foundList;
+    }
+
+    private List<Employee> getEmployFromIndexedColumn(String columnName, String value) {
         HashMap<String, HashMap<String,Employee>> hash = getHash(columnName);
 
         List<HashMap<String,Employee>> employees = hash.entrySet()
@@ -127,7 +137,6 @@ public class EmployeeDB {
         employees.forEach(h -> {
             foundList.addAll(h.values());
         });
-
         return foundList;
     }
 
@@ -148,7 +157,7 @@ public class EmployeeDB {
 
     //ToDo 다양한 필드의 수정을 어떻게 이해하기 쉽게 구현할지
     public Employee modifyEmployee(String employeeNum, Employee modifiedEmployee){
-        Employee found = findEmployee(employeeNum);
+        Employee found = findEmployeeById(employeeNum);
         Employee backup = found.Copy();
         found.Merge(modifiedEmployee);
         return backup; //수정 전 상태를 반환
