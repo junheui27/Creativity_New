@@ -18,25 +18,25 @@ public class ModifyCommand implements CommandExecutor {
     public List<Employee> run(UserRequest request, EmployeeDB db) throws Exception {
         List<Employee> employees = searchEmployees(request, db);
         modifyEmployees(request, employees);
-        return applyModifiedEmployeesToDB(db, employees);
+        return modify(db, employees);
     }
 
-    private List<Employee> applyModifiedEmployeesToDB(EmployeeDB db, List<Employee> employees) {
+    private List<Employee> modify(EmployeeDB db, List<Employee> employees) {
         List<Employee> beforeModifiedEmployees = new ArrayList<>();
         for (Employee employee : employees) {
             Employee beforeModified = db.modifyEmployee(employee.getEmployeeNum(),employee);
             beforeModifiedEmployees.add(beforeModified);
         }
-        return beforeModifiedEmployees; //요구사항 - 수정 전 데이터를 출력해야 함
+        return beforeModifiedEmployees;
     }
 
     private void modifyEmployees(UserRequest request, List<Employee> employees) {
-        request.setCommand(COMMAND.MOD);
-        String columnToChange = request.getArguments().get(2);
+
+        String column = request.getArguments().get(2);
         String newValue = request.getArguments().get(3);
 
         for (Employee employee : employees) {
-            modifyFieldByColumn(employee,columnToChange,newValue);
+            modifyFieldByColumn(employee,column,newValue);
         }
     }
 
@@ -60,6 +60,7 @@ public class ModifyCommand implements CommandExecutor {
 
     private List<Employee> searchEmployees(UserRequest request, EmployeeDB db) throws Exception {
         request.setCommand(COMMAND.SCH);
-        return this.schCommand.run(request, db);
+        List<Employee> employees = this.schCommand.run(request, db);
+        return employees;
     }
 }

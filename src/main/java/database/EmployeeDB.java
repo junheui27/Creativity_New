@@ -122,15 +122,16 @@ public class EmployeeDB {
     private List<Employee> getEmployFromIndexedColumn(String columnName, String value) {
         HashMap<String, HashMap<String,Employee>> hash = getHash(columnName);
 
-        List<HashMap<String,Employee>> employees = hash.entrySet()
+        List<Employee> employees = hash.entrySet()
                 .stream()
                 .filter(h -> h.getKey().contains(value))
-                .map(r->r.getValue()).collect(Collectors.toList());
+                .map(r->r.getValue())
+                .flatMap(x->x.values().stream())
+                .collect(Collectors.toList());
 
         List<Employee> foundList = new ArrayList<>();
-        employees.forEach(h -> {
-            foundList.addAll(h.values());
-        });
+        employees.forEach(e -> foundList.add(e.Copy()));
+
         return foundList;
     }
 
