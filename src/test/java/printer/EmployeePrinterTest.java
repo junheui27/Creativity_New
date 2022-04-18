@@ -42,96 +42,54 @@ public class EmployeePrinterTest {
         employee1 = new Employee(
                 "99000101",
                 "A LEE",
-                "LEE",
-                "A",
                 "010-1234-5678",
-                "1234",
-                "5678",
                 CAREERLEVEL.CL3,
                 "19920101",
-                "1992",
-                "01",
-                "01",
                 CERTI.PRO
 
         );
         employee2 = new Employee(
                 "00000101",
                 "A LEE",
-                "LEE",
-                "A",
                 "010-1234-5678",
-                "1234",
-                "5678",
                 CAREERLEVEL.CL3,
                 "19920101",
-                "1992",
-                "01",
-                "01",
                 CERTI.PRO
 
         );
         employee3 = new Employee(
                 "99999999",
                 "A LEE",
-                "LEE",
-                "A",
                 "010-1234-5678",
-                "1234",
-                "5678",
                 CAREERLEVEL.CL3,
                 "19920101",
-                "1992",
-                "01",
-                "01",
                 CERTI.PRO
 
         );
         employee4 = new Employee(
                 "00000000",
                 "A LEE",
-                "LEE",
-                "A",
                 "010-1234-5678",
-                "1234",
-                "5678",
                 CAREERLEVEL.CL3,
                 "19920101",
-                "1992",
-                "01",
-                "01",
                 CERTI.PRO
 
         );
         employee5 = new Employee(
                 "69999999",
                 "A LEE",
-                "LEE",
-                "A",
                 "010-1234-5678",
-                "1234",
-                "5678",
                 CAREERLEVEL.CL3,
                 "19920101",
-                "1992",
-                "01",
-                "01",
                 CERTI.PRO
 
         );
         employee6 = new Employee(
                 "21999999",
                 "A LEE",
-                "LEE",
-                "A",
                 "010-1234-5678",
-                "1234",
-                "5678",
                 CAREERLEVEL.CL3,
                 "19920101",
-                "1992",
-                "01",
-                "01",
                 CERTI.PRO
 
         );
