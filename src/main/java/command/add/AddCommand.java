@@ -36,6 +36,7 @@ public class AddCommand implements CommandExecutor {
     	employee.setName(EmployeeInfo.get(1));
         employee.setFirstName(EmployeeInfo.get(1).split(" ")[0]);
         employee.setLastName(EmployeeInfo.get(1).split(" ")[1]);
+        employee.setPhoneNumber(EmployeeInfo.get(3));
         employee.setMiddlePhoneNumber(EmployeeInfo.get(3).split("-")[1]);
         employee.setLastPhoneNumer(EmployeeInfo.get(3).split("-")[2]);
         employee.setCl(careerLevel);
