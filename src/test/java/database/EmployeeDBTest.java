@@ -170,7 +170,7 @@ public class EmployeeDBTest {
     }
 
     @Test
-    @DisplayName("[normal] CL 검색")
+    @DisplayName("[normal] CL2 검색")
     public void findTest6(){
         db.addEmployee(defaultEmployee);
         db.addEmployee(emp2);
