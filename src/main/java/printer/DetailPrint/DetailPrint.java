@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DetailPrint implements IPrintOption {
 
-    int printNum=0;
+    private int printNum=0;
     @Override
     public void print(COMMAND command,  List<Employee> results){
         if (command.equals(COMMAND.ADD)){return;}
@@ -30,7 +30,6 @@ public class DetailPrint implements IPrintOption {
             }
 
         }
-        //Collections.sort(tempList,Collections.reverseOrder());
         Collections.sort(tempList);
 
 
