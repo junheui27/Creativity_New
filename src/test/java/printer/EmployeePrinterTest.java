@@ -132,11 +132,11 @@ public class EmployeePrinterTest {
         request.setOptions(new ArrayList<>(Arrays.asList("-p", " "," ")));
 
         employeePrinter.print(request,results);
-        Assertions.assertEquals("SCH,69999999,169999999,A LEE,CL3,010-1234-5678,PRO\r\n" +
-                "SCH,99000101,199000101,A LEE,CL3,010-1234-5678,PRO\r\n" +
-                "SCH,99999999,199999999,A LEE,CL3,010-1234-5678,PRO\r\n" +
-                "SCH,00000000,200000000,A LEE,CL3,010-1234-5678,PRO\r\n" +
-                "SCH,00000101,200000101,A LEE,CL3,010-1234-5678,PRO", outputStreamCaptor.toString().trim());
+        Assertions.assertEquals("SCH,69999999,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
+                "SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
+                "SCH,99999999,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
+                "SCH,00000000,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
+                "SCH,00000101,A LEE,CL3,010-1234-5678,19920101,PRO", outputStreamCaptor.toString().trim());
 
 
     }

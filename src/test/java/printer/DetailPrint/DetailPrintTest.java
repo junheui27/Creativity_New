@@ -66,7 +66,7 @@ public class DetailPrintTest {
 
         IPrintOption detailPrinter=new DetailPrint();
         detailPrinter.print(COMMAND.MOD, results);
-        Assertions.assertEquals("MOD,99000101,A LEE,CL3,010-1234-5678,PRO", outputStreamCaptor.toString().trim());
+        Assertions.assertEquals("MOD,99000101,A LEE,CL3,010-1234-5678,19920101,PRO", outputStreamCaptor.toString().trim());
 
     }
 
@@ -76,7 +76,7 @@ public class DetailPrintTest {
 
         IPrintOption detailPrinter=new DetailPrint();
         detailPrinter.print(COMMAND.SCH, results);
-        Assertions.assertEquals("SCH,99000101,A LEE,CL3,010-1234-5678,PRO", outputStreamCaptor.toString().trim());
+        Assertions.assertEquals("SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO", outputStreamCaptor.toString().trim());
 
     }
     @Test
@@ -85,7 +85,7 @@ public class DetailPrintTest {
 
         IPrintOption detailPrinter=new DetailPrint();
         detailPrinter.print(COMMAND.DEL, results);
-        Assertions.assertEquals("DEL,99000101,A LEE,CL3,010-1234-5678,PRO", outputStreamCaptor.toString().trim());
+        Assertions.assertEquals("DEL,99000101,A LEE,CL3,010-1234-5678,19920101,PRO", outputStreamCaptor.toString().trim());
 
     }
 }
