@@ -8,27 +8,57 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class EmployeeDBTest {
 
     private EmployeeDB db;
     private Employee defaultEmployee;
+    private Employee emp2;
+    private Employee emp3;
+    private Employee emp4;
+    private Employee emp5;
+    private Employee emp6;
+    private Employee emp7;
 
     @BeforeEach
     public void resetDB(){
         db = new EmployeeDB();
         defaultEmployee = new Employee().builder()
                 .employeeNum("17041177")
-                .birthdayDay("01")
-                .birthdayMonth("01")
-                .birthdayYear("2000")
+                .birthday("20000101")
                 .cl(CAREERLEVEL.CL2)
                 .certi(CERTI.PRO)
-                .firstName("whiteDev")
-                .lastName("lee")
-                .lastPhoneNumer("1111")
-                .middlePhoneNumber("1111")
-                .name("whiteDev lee")
+                .phoneNumber("1111-1111")
+                .name("WHITEDEV LEE")
                 .build();
+
+        emp2 = defaultEmployee.Copy();
+        emp2.setEmployeeNum("12345678");
+        emp2.setName("BLACKDEV LEE");
+
+        emp3 = emp2.Copy();
+        emp3.setEmployeeNum("22345678");
+        emp3.setName("LEE WHITEDEV");
+
+        emp4 = emp3.Copy();
+        emp4.setEmployeeNum("32345678");
+        emp4.setName("SW SMILE");
+
+        emp5 = emp4.Copy();
+        emp5.setEmployeeNum("42345678");
+        emp5.setName("JUNHEUI LEE");
+
+        emp6 = emp5.Copy();
+        emp6.setEmployeeNum("52345678");
+        emp6.setName("DOWON CHAE");
+
+        emp7 = emp6.Copy();
+        emp7.setEmployeeNum("62345678");
+        emp7.setName("JIWON SEO");
+        emp7.setPhoneNumber("2222-2222");
+        emp7.setBirthday("20000202");
+
     }
 
     @Test
@@ -77,28 +107,95 @@ public class EmployeeDBTest {
     }
 
     @Test
-    @DisplayName("[normal] name 수정이 잘 되는지")
-    public void modifyTest(){
+    @DisplayName("[normal] 저장 후 이름 조회 성공")
+    public void findTest1(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
 
-        boolean ret = db.addEmployee(defaultEmployee);
+        List<Employee> result = db.findEmployeeByColumn("name","LEE"); //이름은 항상 대문자
+        Assertions.assertEquals(3,result.size());
+    }
 
-        Employee employeeModified = new Employee().builder()
-                .employeeNum("17041177")
-                .birthdayDay("01")
-                .birthdayMonth("01")
-                .birthdayYear("2000")
-                .cl(CAREERLEVEL.CL2)
-                .certi(CERTI.PRO)
-                .firstName("blackDev")
-                .lastName("lee")
-                .lastPhoneNumer("1111")
-                .middlePhoneNumber("1111")
-                .name("whiteDev lee")
-                .build();
+    @Test
+    @DisplayName("[exception] 저장 후 없는 이름 조회 실패")
+    public void findTest2(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
 
-        db.modifyEmployee("17041177",employeeModified);
+        List<Employee> result = db.findEmployeeByColumn("name","YELLOW");
+        Assertions.assertEquals(0,result.size());
+    }
 
-        Employee found = db.findEmployee("17041177");
-        Assertions.assertEquals("blackDev",found.getFirstName());
+    @Test
+    @DisplayName("[exception] 없는 컬럼명 입력")
+    public void findTest3(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
+
+        List<Employee> result = db.findEmployeeByColumn("name2","LEE"); //에러를 띄워야하지 않을까?
+        Assertions.assertEquals(0,result.size());
+    }
+
+    @Test
+    @DisplayName("[normal] 전화번호 검색")
+    public void findTest4(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
+        db.addEmployee(emp4);
+        db.addEmployee(emp5);
+        db.addEmployee(emp6);
+        db.addEmployee(emp7);
+
+        List<Employee> result = db.findEmployeeByColumn("phoneNum","1111-1111");
+        Assertions.assertEquals(6,result.size());
+    }
+
+    @Test
+    @DisplayName("[normal] 생일 검색")
+    public void findTest5(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
+        db.addEmployee(emp4);
+        db.addEmployee(emp5);
+        db.addEmployee(emp6);
+        db.addEmployee(emp7);
+
+        List<Employee> result = db.findEmployeeByColumn("birthday","01");
+        Assertions.assertEquals(6,result.size());
+    }
+
+    @Test
+    @DisplayName("[normal] CL 검색")
+    public void findTest6(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
+        db.addEmployee(emp4);
+        db.addEmployee(emp5);
+        db.addEmployee(emp6);
+        db.addEmployee(emp7);
+
+        List<Employee> result = db.findEmployeeByColumn("cl","CL2");
+        Assertions.assertEquals(7,result.size());
+    }
+
+    @Test
+    @DisplayName("[normal] CERT 검색")
+    public void findTest7(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
+        db.addEmployee(emp4);
+        db.addEmployee(emp5);
+        db.addEmployee(emp6);
+        db.addEmployee(emp7);
+
+        List<Employee> result = db.findEmployeeByColumn("certi","PRO");
+        Assertions.assertEquals(7,result.size());
     }
 }

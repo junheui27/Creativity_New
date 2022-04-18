@@ -7,23 +7,15 @@ import model.Employee;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EmployeeDB {
-    private HashMap<String, Employee> employeeTableById = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByName = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByFirstName = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByLastName = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByPhoneNumber = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByMidlePhoneNumber = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByLastPhoneNumber = new HashMap<>();
-    private HashMap<CAREERLEVEL, HashMap<String,Employee>> tableByCL = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByBirth = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByBirthYear = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByBirthMonth = new HashMap<>();
-    private HashMap<String, HashMap<String,Employee>> tableByBirthDay = new HashMap<>();
-    private HashMap<CERTI, HashMap<String,Employee>> tableByCERTI = new HashMap<>();
-
-
+    final private HashMap<String, Employee> idHash = new HashMap<>();
+    final private HashMap<String, HashMap<String,Employee>> nameHash = new HashMap<>();
+    final private HashMap<String, HashMap<String,Employee>> phoneNumberHash = new HashMap<>();
+    final private HashMap<String, HashMap<String,Employee>> careerLevelHash = new HashMap<>();
+    final private HashMap<String, HashMap<String,Employee>> birthHash = new HashMap<>();
+    final private HashMap<String, HashMap<String,Employee>> certiHash = new HashMap<>();
 
     public boolean addEmployee(Employee newEmployee){
 
@@ -32,35 +24,83 @@ public class EmployeeDB {
 
         Employee employeeToAdd = newEmployee.Copy();
         String id = employeeToAdd.getEmployeeNum();
-        employeeTableById.put(id,employeeToAdd);
+        idHash.put(id,employeeToAdd);
 
-        AddToNameTable(employeeToAdd, id);
-
+        AddToNameTable(employeeToAdd);
+        AddToPhoneHash(employeeToAdd);
+        AddToCLHash(employeeToAdd);
+        AddToBirthHash(employeeToAdd);
+        AddToCertiHash(employeeToAdd);
 
         return true;
     }
 
-    private void AddToNameTable(Employee employeeToAdd, String id) {
+    private void AddToNameTable(Employee employeeToAdd) {
         String name = employeeToAdd.getName();
-        if(!tableByName.containsKey(name)){
-            tableByName.put(name,new HashMap<>());
+        if(name == null || name.isEmpty())
+            return;
+
+        if(!nameHash.containsKey(name)){
+            nameHash.put(name,new HashMap<>());
         }
-        tableByName.get(name).put(id, employeeToAdd);
+        nameHash.get(name).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
+    }
+    private void AddToPhoneHash(Employee employeeToAdd) {
+        String phone = employeeToAdd.getPhoneNumber();
+        if(phone == null || phone.isEmpty())
+            return;
+
+        if(!phoneNumberHash.containsKey(phone)){
+            phoneNumberHash.put(phone,new HashMap<>());
+        }
+        phoneNumberHash.get(phone).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
+    }
+    private void AddToCLHash(Employee employeeToAdd) {
+        String cl = employeeToAdd.getCl().toString();
+        if(cl == null || cl.isEmpty())
+            return;
+
+        if(!careerLevelHash.containsKey(cl)){
+            careerLevelHash.put(cl,new HashMap<>());
+        }
+        careerLevelHash.get(cl).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
+    }
+
+    private void AddToBirthHash(Employee employeeToAdd) {
+        String birth = employeeToAdd.getBirthday();
+        if(birth == null || birth.isEmpty())
+            return;
+
+        if(!birthHash.containsKey(birth)){
+            birthHash.put(birth,new HashMap<>());
+        }
+        birthHash.get(birth).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
+    }
+
+    private void AddToCertiHash(Employee employeeToAdd) {
+        String certi = employeeToAdd.getCerti().toString();
+        if(certi == null || certi.isEmpty())
+            return;
+
+        if(!certiHash.containsKey(certi)){
+            certiHash.put(certi,new HashMap<>());
+        }
+        certiHash.get(certi).put(employeeToAdd.getEmployeeNum(), employeeToAdd);
     }
 
     private boolean IsAlreadyInDatabase(Employee newEmployee) {
-        return employeeTableById.containsKey(newEmployee.getEmployeeNum());
+        return idHash.containsKey(newEmployee.getEmployeeNum());
     }
 
     public Employee deleteEmployee(Employee deleteEmployee){
 
         String id = deleteEmployee.getEmployeeNum();
-        if(!employeeTableById.containsKey(id))
+        if(!idHash.containsKey(id))
             return new Employee();
 
-        Employee removed = employeeTableById.remove(id);
-        if(tableByName.containsKey(removed.getName())){
-            tableByName.get(removed.getName()).remove(id);
+        Employee removed = idHash.remove(id);
+        if(nameHash.containsKey(removed.getName())){
+            nameHash.get(removed.getName()).remove(id);
         }
 
         return removed; //삭제된 node
@@ -69,14 +109,41 @@ public class EmployeeDB {
     //ToDo 다양한 필드의 검색을 어떻게 이해하기 쉽게 지원할지
     public Employee findEmployee(String employeeNum){
 
-        if(employeeTableById.containsKey(employeeNum)){
-            return employeeTableById.get(employeeNum);
+        if(idHash.containsKey(employeeNum)){
+            return idHash.get(employeeNum);
         }
         return new Employee();
     }
 
     public List<Employee> findEmployeeByColumn(String columnName, String value){
-        return new ArrayList<>();
+        HashMap<String, HashMap<String,Employee>> hash = getHash(columnName);
+
+        List<HashMap<String,Employee>> employees = hash.entrySet()
+                .stream()
+                .filter(h -> h.getKey().contains(value))
+                .map(r->r.getValue()).collect(Collectors.toList());
+
+        List<Employee> foundList = new ArrayList<>();
+        employees.forEach(h -> {
+            foundList.addAll(h.values());
+        });
+
+        return foundList;
+    }
+
+    private HashMap<String, HashMap<String,Employee>> getHash(String columnName){
+        if(columnName.equals("name"))
+            return nameHash;
+        if(columnName.equals("cl"))
+            return careerLevelHash;
+        if(columnName.equals("phoneNum"))
+            return phoneNumberHash;
+        if(columnName.equals("birthday"))
+            return birthHash;
+        if(columnName.equals("certi"))
+            return certiHash;
+
+        return new HashMap<>();
     }
 
     //ToDo 다양한 필드의 수정을 어떻게 이해하기 쉽게 구현할지

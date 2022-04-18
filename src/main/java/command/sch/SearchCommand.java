@@ -113,17 +113,17 @@ public class SearchCommand implements CommandExecutor, SearchOptionI {
 
     public List<Employee> searchByEmpNum(String empNum, EmployeeDB db) {
         List<Employee> resultList = new ArrayList<>();
-        if (db.empNumberMap.containsKey(empNum)) {
-            resultList.add(db.empNumberMap.get(empNum));
-        }
+//        if (db.empNumberMap.containsKey(empNum)) {
+//            resultList.add(db.empNumberMap.get(empNum));
+//        }
         return resultList;
     }
 
     private List<Employee> searchMapKeyValue(String key, EmployeeDB db) {
         List<Employee> resultList = new ArrayList<>();
-        for (Map.Entry<String, Employee> entry : db.nameMap.get(key).entrySet()) {
-            resultList.add(entry.getValue());
-        }
+//        for (Map.Entry<String, Employee> entry : db.nameMap.get(key).entrySet()) {
+//            resultList.add(entry.getValue());
+//        }
         return resultList;
     }
 
