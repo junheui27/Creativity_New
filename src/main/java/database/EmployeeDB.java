@@ -4,7 +4,9 @@ import model.CAREERLEVEL;
 import model.CERTI;
 import model.Employee;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class EmployeeDB {
     private HashMap<String, Employee> employeeTableById = new HashMap<>();
@@ -20,6 +22,7 @@ public class EmployeeDB {
     private HashMap<String, HashMap<String,Employee>> tableByBirthMonth = new HashMap<>();
     private HashMap<String, HashMap<String,Employee>> tableByBirthDay = new HashMap<>();
     private HashMap<CERTI, HashMap<String,Employee>> tableByCERTI = new HashMap<>();
+
 
 
     public boolean addEmployee(Employee newEmployee){
@@ -70,6 +73,10 @@ public class EmployeeDB {
             return employeeTableById.get(employeeNum);
         }
         return new Employee();
+    }
+
+    public List<Employee> findEmployeeByColumn(String columnName, String value){
+        return new ArrayList<>();
     }
 
     //ToDo 다양한 필드의 수정을 어떻게 이해하기 쉽게 구현할지
