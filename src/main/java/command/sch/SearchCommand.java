@@ -8,21 +8,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+public class SearchCommand implements CommandExecutor, SearchOptionI {
 
-class RequestObj {
-    String key;
-    String value;
-    String option;
+    class RequestObj {
+        String key;
+        String value;
+        String option;
 
-    RequestObj(String key, String value, String option) {
-        this.key = key;
-        this.value = value;
-        this.option = option;
+        public RequestObj(String key, String value, String option) {
+            this.key = key;
+            this.value = value;
+            this.option = option;
+        }
     }
-}
-
-
-public class SearchCommand implements CommandExecutor,SearchOptionI{
 
     @Override
     public List<Employee> run(UserRequest request, EmployeeDB db) {
@@ -32,6 +30,7 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
             RequestObj reqObj = makeReqObj(request);
             resultEmpList = SearchEmployeeList(reqObj, db);
         }
+
         return resultEmpList;
     }
 
@@ -49,25 +48,29 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
 
 
     private List<Employee> SearchEmployeeList(RequestObj reqObj, EmployeeDB db) {
-
         if (reqObj.key.equals("employeeNum")) {
             return searchByEmpNum(reqObj, db);
-        } else if (reqObj.key.equals("name")) {
+        }
+        else if (reqObj.key.equals("name")) {
             return searchByName(reqObj, db);
-        } else if (reqObj.key.equals("phoneNum")) {
-            return searchByPhoneNumber(reqObj, db);
-        } else if (reqObj.key.equals("cl")) {
+        }
+        else if (reqObj.key.equals("phoneNum")) {
+            return searchByPhoneNum(reqObj, db);
+        }
+        else if (reqObj.key.equals("cl")) {
             return searchByCl(reqObj, db);
-        } else if (reqObj.key.equals("birthday")) {
+        }
+        else if (reqObj.key.equals("birthday")) {
             return searchByBirthday(reqObj, db);
-        } else if (reqObj.key.equals("certi")) {
+        }
+        else if (reqObj.key.equals("certi")) {
             return searchByCerti(reqObj, db);
         }
-        return new ArrayList<>();
+        return null;
     }
 
 
-    public List<Employee> searchByBirthday(RequestObj reqObj, EmployeeDB db) {
+    private List<Employee> searchByBirthday(RequestObj reqObj, EmployeeDB db) {
         // -y / -m / -d :  생년월일의 연도로 검색 / -m : 생년월일의 월로 검색 / -d : 생년월일의 일로 검색
         switch (reqObj.option) {
             case "-y":
@@ -81,7 +84,7 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
         }
     }
 
-    public List<Employee> searchByPhoneNumber(RequestObj reqObj, EmployeeDB db) {
+    private List<Employee> searchByPhoneNum(RequestObj reqObj, EmployeeDB db) {
 
         // -m / -l : 	전화 번호 중간 자리로 검색 / -l : 전화 번호 뒷자리로 검색
         switch (reqObj.option) {
@@ -94,7 +97,7 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
         }
     }
 
-    public List<Employee> searchByName(RequestObj reqObj, EmployeeDB db) {
+    private List<Employee> searchByName(RequestObj reqObj, EmployeeDB db) {
         // -f / -l:  	성명의 이름으로 검색 / -l : 성명의 성으로 검색
         switch (reqObj.option) {
             case "-f":
@@ -118,7 +121,7 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
     @Override
     public List<Employee> searchByFirstName(RequestObj reqObj, EmployeeDB db) {
         List<Employee> emplyeeList = new ArrayList<>();
-        String firstName = reqObj.value;
+        String firstName = reqObj.key.substring(0,reqObj.value.indexOf(" "));
         emplyeeList = searchByKeyValue(reqObj.key, firstName, db);
 
         List<Employee> resultList = new ArrayList<>();
@@ -137,7 +140,7 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
     @Override
     public List<Employee> searchByLastName(RequestObj reqObj, EmployeeDB db) {
         List<Employee> emplyeeList = new ArrayList<>();
-        String lastName = reqObj.value;
+        String lastName = reqObj.key.substring(reqObj.value.lastIndexOf(" ") + 1);
         emplyeeList = searchByKeyValue(reqObj.key, lastName, db);
 
         List<Employee> resultList = new ArrayList<>();
@@ -153,10 +156,11 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
         return resultList;
     }
 
+
     @Override
     public List<Employee> searchByPhoneNumberMid(RequestObj reqObj, EmployeeDB db) {
         List<Employee> emplyeeList = new ArrayList<>();
-        String phoneNumberMid = reqObj.value;
+        String phoneNumberMid = reqObj.value.split("-")[1];
         emplyeeList = searchByKeyValue(reqObj.key, phoneNumberMid, db);
 
         List<Employee> resultList = new ArrayList<>();
@@ -175,7 +179,7 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
     @Override
     public List<Employee> searchByPhoneNumberLast(RequestObj reqObj, EmployeeDB db) {
         List<Employee> emplyeeList = new ArrayList<>();
-        String phoneNumberLast = reqObj.value;
+        String phoneNumberLast = reqObj.value.split("-")[2];
         emplyeeList = searchByKeyValue(reqObj.key, phoneNumberLast, db);
 
         List<Employee> resultList = new ArrayList<>();
@@ -195,17 +199,16 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
         return searchByKeyValue(reqObj.key, reqObj.value, db);
     }
 
-    @Override
     public List<Employee> searchByBirthdayYear(RequestObj reqObj, EmployeeDB db) {
         List<Employee> emplyeeList = new ArrayList<>();
-        String birthdayYear = reqObj.value;
+        String birthdayYear = reqObj.value.substring(0,4);
         emplyeeList = searchByKeyValue(reqObj.key, birthdayYear, db);
 
         List<Employee> resultList = new ArrayList<>();
         for (Iterator<Employee> itr = emplyeeList.iterator(); itr.hasNext(); ) {
             Employee itrEmployee = itr.next();
             String itrBirthday = itrEmployee.getBirthday();
-            String itrBirthdayYear = itrBirthday.substring(0, 4);
+            String itrBirthdayYear = itrBirthday.substring(0,4);
 
             if (birthdayYear.equals(itrBirthdayYear)) {
                 resultList.add(itrEmployee);
@@ -214,17 +217,16 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
         return resultList;
     }
 
-    @Override
     public List<Employee> searchByBirthdayMonth(RequestObj reqObj, EmployeeDB db) {
         List<Employee> emplyeeList = new ArrayList<>();
-        String birthdayMonth = reqObj.value;
+        String birthdayMonth = reqObj.value.substring(4,6);
         emplyeeList = searchByKeyValue(reqObj.key, birthdayMonth, db);
 
         List<Employee> resultList = new ArrayList<>();
         for (Iterator<Employee> itr = emplyeeList.iterator(); itr.hasNext(); ) {
             Employee itrEmployee = itr.next();
             String itrBirthday = itrEmployee.getBirthday();
-            String itrBirthdayMonth = itrBirthday.substring(4, 6);
+            String itrBirthdayMonth = itrBirthday.substring(4,6);
 
             if (birthdayMonth.equals(itrBirthdayMonth)) {
                 resultList.add(itrEmployee);
@@ -233,17 +235,16 @@ public class SearchCommand implements CommandExecutor,SearchOptionI{
         return resultList;
     }
 
-    @Override
     public List<Employee> searchByBirthdayDay(RequestObj reqObj, EmployeeDB db) {
         List<Employee> emplyeeList = new ArrayList<>();
-        String birthdayDay = reqObj.value;
+        String birthdayDay = reqObj.value.substring(6,8);
         emplyeeList = searchByKeyValue(reqObj.key, birthdayDay, db);
 
         List<Employee> resultList = new ArrayList<>();
         for (Iterator<Employee> itr = emplyeeList.iterator(); itr.hasNext(); ) {
             Employee itrEmployee = itr.next();
             String itrBirthday = itrEmployee.getBirthday();
-            String itrBirthdayDay = itrBirthday.substring(6, 8);
+            String itrBirthdayDay = itrBirthday.substring(6,8);
 
             if (birthdayDay.equals(itrBirthdayDay)) {
                 resultList.add(itrEmployee);
