@@ -20,12 +20,13 @@ public class Main {
         SavePath = arg[1];
         List<String> inputs = new ArrayList<String>();
 
-        if(isValidInputFileExistTrue(loadPath))
+        if(isValidInputFileExistTrue(loadPath)) 
         {
-            inputs = readInput(loadPath);
-            run(inputs,SavePath);
-
+        	inputs = readInput(loadPath);
+            List<String> outputs = run(inputs);
+            writeOutput(SavePath,outputs);
         }
+
 
         System.out.println("finish");
     }
@@ -49,11 +50,10 @@ public class Main {
         return Pattern.matches(regx, str);
     }
 
-    public static void  run(List<String> inputs,String savePath){
+    public static void  run(List<String> inputs){
 
         for (String input : inputs){
             UserRequest request = UserRequestConverter.convert(input);
-            request.setOutputPath(savePath);
             manager.process(request);
         }
 
@@ -73,5 +73,14 @@ public class Main {
 
         return inputArray;
     }
+    
+    public static  void writeOutput(String str, List<String> outputs) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./" + str));
 
+        for(String str2 : outputs){
+            bw.write(str2 + "\n");
+        }
+        bw.flush();
+        bw.close();
+    }
 }
