@@ -5,14 +5,15 @@ import command.factory.CommandFactory;
 import database.EmployeeDB;
 import model.Employee;
 import model.UserRequest;
-import printer.EmployeePrinter;
+import printer.EmployPrinter.*;
+
 
 import java.util.List;
 
 public class EmployeeManager {
     final private EmployeeDB db = new EmployeeDB();
     final private CommandFactory commandFactory = new CommandFactory();
-    final private EmployeePrinter employeePrinter = new EmployeePrinter();
+    final private EmployeePrinterWR employeePrinter = new EmployeePrinterWR();
 
     public void process(UserRequest request){
         try{
