@@ -20,48 +20,42 @@ class EmployeePhoneNumberFilter extends SearchFilter {
         this.option = option;
     }
 
+    @Override
     public List<Employee> process(List<Employee> searchedEmployees) {
+
+        if(this.option.equals(" ") || this.option.equals("")){
+            return searchedEmployees;
+        }
+        return searchByValue(searchedEmployees);
+    }
+
+    @Override
+    public String findValueByOption(String str) {
 
         switch (this.option) {
             case "-m":
-                return searchByPhoneNumberMid(searchedEmployees);
+                return str.split("-")[1];
             case "-l":
-                return searchByPhoneNumberLast(searchedEmployees);
+                return str.split("-")[2];
             default:
-                return searchedEmployees;
+                return str;
         }
     }
 
-        public List<Employee> searchByPhoneNumberMid (List<Employee> searchedEmployees){
+    @Override
+    public List<Employee> searchByValue(List<Employee> searchedEmployees) {
 
-            List<Employee> resultList = new ArrayList<>();
-            for (Iterator<Employee> itr = searchedEmployees.iterator(); itr.hasNext(); ) {
-                Employee itrEmployee = itr.next();
-                String itrPhoneNumber = itrEmployee.getPhoneNumber();
-                String itrPhoneNumberMid = itrPhoneNumber.split("-")[1];
+        List<Employee> resultList = new ArrayList<>();
+        for(Employee itrEmployee: searchedEmployees){
 
-                if (this.value.equals(itrPhoneNumberMid)) {
-                    resultList.add(itrEmployee);
-                }
+            String itrPhoneNumber = findValueByOption(itrEmployee.getPhoneNumber());
+
+            if (this.value.equals(itrPhoneNumber)) {
+                resultList.add(itrEmployee);
             }
-            return resultList;
         }
-
-
-        public List<Employee> searchByPhoneNumberLast (List<Employee> searchedEmployees){
-
-            List<Employee> resultList = new ArrayList<>();
-            for (Iterator<Employee> itr = searchedEmployees.iterator(); itr.hasNext(); ) {
-                Employee itrEmployee = itr.next();
-                String itrPhoneNumber = itrEmployee.getPhoneNumber();
-                String itrPhoneNumberLast = itrPhoneNumber.split("-")[2];
-
-                if (this.value.equals(itrPhoneNumberLast)) {
-                    resultList.add(itrEmployee);
-                }
-            }
-            return resultList;
-        }
-
-
+        return resultList;
     }
+
+
+}

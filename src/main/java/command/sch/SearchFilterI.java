@@ -7,5 +7,6 @@ import model.UserRequest;
 import java.util.List;
 
 public interface SearchFilterI {
-    List<Employee> process(List<Employee> searchedEmployees);
+    String findValueByOption(String str);
+    List<Employee> searchByValue(List<Employee> searchedEmployees);
 }
