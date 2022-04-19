@@ -1,6 +1,4 @@
 import manager.EmployeeManager;
-import model.UserRequest;
-import model.UserRequestConverter;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,23 +11,24 @@ public class Main {
     private static String loadPath ="";
     private static String SavePath ="";
 
-    public static void main(String arg[]) throws IOException {
-        System.out.println("start");
-
+    public static void main(String arg[]) {
         loadPath = arg[0];
         SavePath = arg[1];
         List<String> inputs = new ArrayList<String>();
         
-        if(isValidInputFileExistTrue(loadPath)) 
-        {
-        	inputs = readInput(loadPath);
-            List<String> outputs = run(inputs);
-            
-            
-            writeOutput("SavePath",outputs);
+        if(!isValidInputFileExistTrue(loadPath)){
+            System.out.println("no file");
+            return;
         }
 
-        System.out.println("finish");
+        inputs = readInput(loadPath);
+        if(inputs == null || inputs.size() == 0){
+            System.out.println("wrong file");
+            return;
+        }
+
+        List<String> outputs = run(inputs);
+        writeOutput("SavePath",outputs);
     }
     
 
@@ -60,28 +59,47 @@ public class Main {
         return inputs;
     }
 
-    public static List<String> readInput(String str) throws IOException {
+    public static List<String> readInput(String str){
 
         List<String> inputArray = new ArrayList();
-        BufferedReader br = new BufferedReader(new FileReader("./"+str));
-        String str2 = "";
-
-        while((str2 = br.readLine())!=null){
-            if(isValidInputFormatTrue(str2))
-            	inputArray.add(str2);
+        BufferedReader br = null;
+        try{
+            br = new BufferedReader(new FileReader("./"+str));
         }
-        br.close();
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+            return inputArray;
+        }
+
+        try{
+            String str2 = "";
+
+            while((str2 = br.readLine())!=null){
+                if(isValidInputFormatTrue(str2))
+                    inputArray.add(str2);
+            }
+            br.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
 
         return inputArray;
     }
 
-    public static  void writeOutput(String str, List<String> outputs) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./" + str));
+    public static  void writeOutput(String str, List<String> outputs) {
 
-        for(String str2 : outputs){
-            bw.write(str2 + "\n");
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter("./" + str));
+
+            for(String str2 : outputs){
+                bw.write(str2 + "\n");
+            }
+            bw.flush();
+            bw.close();
         }
-        bw.flush();
-        bw.close();
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }
