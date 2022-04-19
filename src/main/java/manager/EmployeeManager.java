@@ -5,20 +5,21 @@ import command.factory.CommandFactory;
 import database.EmployeeDB;
 import model.Employee;
 import model.UserRequest;
-import printer.EmployeePrinter;
+import printer.EmployPrinter.*;
+
 
 import java.util.List;
 
 public class EmployeeManager {
     final private EmployeeDB db = new EmployeeDB();
     final private CommandFactory commandFactory = new CommandFactory();
-    final private EmployeePrinter employeePrinter = new EmployeePrinter();
+    final private FilePrinter filePrinter = new FilePrinter();
 
     public void process(UserRequest request){
         try{
             CommandExecutor executor = commandFactory.getCommand(request);
             List<Employee> results = executor.run(request,db);
-            employeePrinter.print(request,results);
+            filePrinter.print(request,results);
         }
         catch (Exception e){
             e.printStackTrace();
