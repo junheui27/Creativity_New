@@ -54,7 +54,7 @@ public class Main {
     public static List<String> run(List<String> inputs){
 
         for (String input : inputs){
-            //UserRequest request = UserRequestConverter.convert(input);
+            UserRequest request = UserRequestConverter.convert(input);
             //manager.process(request);
         }
         return inputs;
