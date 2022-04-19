@@ -19,7 +19,5 @@ public class FilePrinter implements IEmployeePrinter {
 
     public List<String> printOption(List<String> outputs)throws IOException {
         return outputs;
-
     }
-
 }
