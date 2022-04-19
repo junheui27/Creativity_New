@@ -80,9 +80,9 @@ public class EmployeeDBTest {
         sameName.setEmployeeNum("11111111");
         db.addEmployee(sameName);
 
-        Employee found = db.findEmployeeById("17041177");
+        List<Employee> found = db.findEmployeeByColumn("name",sameName.getName());
 
-        Assertions.assertTrue(found.equals(defaultEmployee));
+        Assertions.assertTrue(found.size()==2);
     }
 
     @Test
@@ -170,7 +170,7 @@ public class EmployeeDBTest {
     }
 
     @Test
-    @DisplayName("[normal] CL 검색")
+    @DisplayName("[normal] CL2 검색")
     public void findTest6(){
         db.addEmployee(defaultEmployee);
         db.addEmployee(emp2);
@@ -197,5 +197,60 @@ public class EmployeeDBTest {
 
         List<Employee> result = db.findEmployeeByColumn("certi","PRO");
         Assertions.assertEquals(7,result.size());
+    }
+
+    @Test
+    @DisplayName("[normal] certi 수정시 hash객체 내부에서도 같이 변경되었는지 검사")
+    public void modTest1(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
+        db.addEmployee(emp4);
+        db.addEmployee(emp5);
+        db.addEmployee(emp6);
+        db.addEmployee(emp7);
+
+        Employee toBeModified = db.findEmployeeById(emp7.getEmployeeNum());
+        toBeModified.setCerti(CERTI.EX);
+
+        Employee beforeModified = db.modifyEmployee(emp7.getEmployeeNum(),toBeModified);
+        Employee modified = db.findEmployeeById(emp7.getEmployeeNum());
+        List<Employee> proEmployees = db.findEmployeeByColumn("certi",CERTI.PRO.toString());
+        List<Employee> exEmployees = db.findEmployeeByColumn("certi",CERTI.EX.toString());
+
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(CERTI.PRO,beforeModified.getCerti()),
+                ()->Assertions.assertEquals(CERTI.EX,modified.getCerti()),
+                ()->Assertions.assertEquals(6,proEmployees.size()),
+                ()->Assertions.assertEquals(1,exEmployees.size())
+        );
+    }
+
+    @Test
+    @DisplayName("[normal] name 수정시 hash객체 내부에서도 같이 변경되었는지 검사")
+    public void modTest2(){
+        db.addEmployee(defaultEmployee);
+        db.addEmployee(emp2);
+        db.addEmployee(emp3);
+        db.addEmployee(emp4);
+        db.addEmployee(emp5);
+        db.addEmployee(emp6);
+        db.addEmployee(emp7);
+
+        String emp6Id = emp6.getEmployeeNum();
+        Employee toBeModified = db.findEmployeeById(emp6Id);
+        toBeModified.setName("CHANGE NAME");
+
+        Employee beforeModified = db.modifyEmployee(emp6Id,toBeModified);
+        Employee modified = db.findEmployeeById(emp6Id);
+        List<Employee> nameChanged = db.findEmployeeByColumn("name","CHANGE");
+        List<Employee> nameRemoved = db.findEmployeeByColumn("name","DOWON");
+
+        Assertions.assertAll(
+                ()->Assertions.assertEquals("DOWON CHAE",beforeModified.getName()),
+                ()->Assertions.assertEquals("CHANGE NAME",modified.getName()),
+                ()->Assertions.assertEquals(1,nameChanged.size()),
+                ()->Assertions.assertEquals(0,nameRemoved.size())
+        );
     }
 }
