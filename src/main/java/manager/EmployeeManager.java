@@ -14,9 +14,14 @@ public class EmployeeManager {
     final private CommandFactory commandFactory = new CommandFactory();
     final private EmployeePrinter employeePrinter = new EmployeePrinter();
 
-    public void process(UserRequest request) throws Exception{
-        CommandExecutor executor = commandFactory.getCommand(request);
-        List<Employee> results = executor.run(request,db);
-        employeePrinter.print(request,results);
+    public void process(UserRequest request){
+        try{
+            CommandExecutor executor = commandFactory.getCommand(request);
+            List<Employee> results = executor.run(request,db);
+            employeePrinter.print(request,results);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
