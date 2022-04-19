@@ -16,8 +16,18 @@ public class SearchFilter implements SearchFilterI{
         this.option = option;
     }
 
-    @Override
     public List<Employee> process(List<Employee> searchedEmployees) {
         return searchedEmployees;
     }
+
+    @Override
+    public String findValueByOption(String str) {
+        return str;
+    }
+
+    @Override
+    public List<Employee> searchByValue(List<Employee> searchedEmployees) {
+        return searchedEmployees;
+    }
+
 }

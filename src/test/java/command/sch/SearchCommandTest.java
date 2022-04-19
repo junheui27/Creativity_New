@@ -222,7 +222,7 @@ class SearchCommandTest {
     }
 
     @Test
-    void searchByBirthday(){
+    void searchByBirthdayTest(){
         RequestObj obj = new RequestObj("birthday","22222220", "");
         list = sc.SearchEmployeeList(obj,db);
         assertEquals(1,list.size());

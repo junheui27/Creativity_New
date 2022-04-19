@@ -9,11 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 
 class RequestObj {
-    String column;
-    String value;
-    String option;
+    public String column;
+    public String value;
+    public String option;
 
-    RequestObj(String column, String value, String option) {
+    public RequestObj(String column, String value, String option) {
         this.column = column;
         this.value = value;
         this.option = option;
@@ -23,20 +23,24 @@ class RequestObj {
 public class SearchCommand implements CommandExecutor{
 
     @Override
-    public List<Employee> run(UserRequest request, EmployeeDB db) {
+    public List<Employee> run(UserRequest request, EmployeeDB db) throws Exception {
         List<Employee> resultEmpList = new ArrayList<>();
 
         if (isSearchCmd(request)) {
             RequestObj reqObj = makeReqObj(request);
             resultEmpList = SearchEmployeeList(reqObj, db);
         }
+        else{
+            throw new Exception("SCH 명령어가 아닙니다.");
+        }
+
         return resultEmpList;
     }
 
     private RequestObj makeReqObj(UserRequest request) {
         String column = request.getArguments().get(0);
         String value = request.getArguments().get(1);
-        String option = request.getOptions().get(0);
+        String option = request.getOptions().get(1);
 
         return new RequestObj(column, value, option);
     }
@@ -59,7 +63,7 @@ public class SearchCommand implements CommandExecutor{
     List<Employee> SearchEmployeeList(RequestObj reqObj, EmployeeDB db) {
 
         List<Employee> searchedEmployees = searchByColumnValue(reqObj.column, reqObj.value, db);
-        SearchFilter searchFilter = getEmployeeFilter(reqObj.column, reqObj.value, reqObj.option); //NameFilter, BirthdayFilter, PhoneFilter
+        SearchFilter searchFilter = getEmployeeFilter(reqObj.column, reqObj.value, reqObj.option);
         List<Employee> filterdEmployees = searchFilter.process(searchedEmployees);
 
         return filterdEmployees;

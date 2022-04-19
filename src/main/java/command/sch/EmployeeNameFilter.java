@@ -7,60 +7,54 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-class EmployeeNameFilter extends SearchFilter{
+class EmployeeNameFilter extends SearchFilter {
 
     private String column;
     private String value;
     private String option;
 
-    EmployeeNameFilter(String column, String value, String option){
+    EmployeeNameFilter(String column, String value, String option) {
         super(column, value, option);
         this.column = column;
         this.value = value;
         this.option = option;
     }
 
+    @Override
     public List<Employee> process(List<Employee> searchedEmployees) {
-        switch (option) {
+        if(this.option.equals(" ") || this.option.equals("")){
+            return searchedEmployees;
+        }
+        return searchByValue(searchedEmployees);
+    }
+
+    @Override
+    public String findValueByOption(String str) {
+
+        switch (this.option) {
             case "-f":
-                return searchByFirstName(searchedEmployees);
+                return str.substring(0, str.indexOf(" "));
             case "-l":
-                return searchByLastName(searchedEmployees);
+                return str.substring(str.lastIndexOf(" ") + 1);
             default:
-                return searchedEmployees;
+                return str;
         }
     }
 
-    public List<Employee> searchByFirstName(List<Employee> searchedEmployees) {
+    @Override
+    public List<Employee> searchByValue(List<Employee> searchedEmployees) {
 
         List<Employee> resultList = new ArrayList<>();
-        for (Iterator<Employee> itr = searchedEmployees.iterator(); itr.hasNext(); ) {
-            Employee itrEmployee = itr.next();
-            String itrFullName = itrEmployee.getName();
-            String itrFirstName = itrFullName.substring(0, itrFullName.indexOf(" "));
+        for (Employee itrEmployee : searchedEmployees) {
+            String itrtName = findValueByOption(itrEmployee.getName());
 
-            if (this.value.equals(itrFirstName)) {
+            if (this.value.equals(itrtName)) {
                 resultList.add(itrEmployee);
             }
         }
+
         return resultList;
     }
-
-    public List<Employee> searchByLastName(List<Employee> searchedEmployees) {
-
-        List<Employee> resultList = new ArrayList<>();
-        for (Iterator<Employee> itr = searchedEmployees.iterator(); itr.hasNext(); ) {
-            Employee itrEmployee = itr.next();
-            String itrFullName = itrEmployee.getName();
-            String itrLasttName = itrFullName.substring(itrFullName.lastIndexOf(" ") + 1);
-
-            if (this.value.equals(itrLasttName)) {
-                resultList.add(itrEmployee);
-            }
-        }
-        return resultList;
-    }
-
 
 
 
