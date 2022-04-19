@@ -17,16 +17,7 @@ import java.util.List;
 
 public class FilePrinter implements IEmployeePrinter {
 
-    public void printOption(String outputPath, List<String> outputs)throws IOException {
-
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./" + outputPath,true));
-
-        for(String str2 : outputs){
-            bw.write(str2 + "\n");
-        }
-        bw.flush();
-        bw.close();
-
+    public List<String> printOption(List<String> outputs)throws IOException {
+        return outputs;
     }
-
 }

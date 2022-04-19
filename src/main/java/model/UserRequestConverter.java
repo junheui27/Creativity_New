@@ -129,7 +129,7 @@ public class UserRequestConverter {
 	   	 List<String> Argument = new ArrayList();
 		 
 	   	for(int index = 1 ; index <= 3 ; index++) {
-	   		if(isValidOptionTrue(str[index]))
+	   		if(isValidOptionTrue(str[index]) || str[index].isBlank())
 	   			Argument.add(str[index]);
 	   	}
 	   	return Argument;
