@@ -17,7 +17,7 @@ public class AddCommand implements CommandExecutor {
     		return new ArrayList();
     	
     	
-    	//í˜•ì‹� : ADD,,,,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO
+    	//양식 : ADD,,,,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO
     	List<String> EmployeeInfo = request.getArguments();
     	CAREERLEVEL careerLevel = null;
     	if(EmployeeInfo.get(2).equals("CL1"))
