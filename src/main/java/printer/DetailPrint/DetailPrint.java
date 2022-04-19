@@ -67,6 +67,9 @@ public class DetailPrint implements IPrintOption {
         List<TempEmployee> tempList=new ArrayList<>();
 
         for (Employee employee:results){
+            if(employee.getEmployeeNum() == null)
+                continue;
+
             TempEmployee tempEmployee=new TempEmployee(employee);
             tempList.add(tempEmployee);
         }

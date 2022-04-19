@@ -58,7 +58,7 @@ class MainTest {
         result.add("SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO");
         result.add("SCH,99100202,BB KIM,CL4,010-2341-5679,19920202,PRO");
 
-        /* ±â´É ±¸Çö ÀÌÀü Å×½ºÆ® ÄÚµå¸¸ ÀÛ¼º ½ÇÇà X
+        /* ê¸°ëŠ¥ êµ¬í˜„ ì´ì „ í…ŒìŠ¤íŠ¸ ì½”ë“œë§Œ ì‘ì„± ì‹¤í–‰ X
         for(int i =0 ; i < outputs.size(); i++){
             assertEquals(outputs.get(i), result.get(i));
         }
