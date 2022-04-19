@@ -51,20 +51,14 @@ public class Main {
     	return Pattern.matches(regx, str);
     }
 
-
-    static boolean isValidOutputFormatTrue(String str) {
-    	String regx = "^[A-Z]{3}\\,.*";
-    	return Pattern.matches(regx, str);
-    }
-
-    public static List<String> run(List<String> inputs,String savePath) throws Exception {
+    public static void run(List<String> inputs,String savePath) throws Exception {
 
         for (String input : inputs){
             UserRequest request = UserRequestConverter.convert(input);
             request.setOutputPath(savePath);
             manager.process(request);
         }
-        return inputs;
+
     }
 
     public static List<String> readInput(String str) throws IOException {
