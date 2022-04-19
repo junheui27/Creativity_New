@@ -1,4 +1,4 @@
-package printer.DetailPrint;
+package printer.BriefPrint;
 
 import model.COMMAND;
 import model.Employee;
