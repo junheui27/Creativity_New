@@ -54,12 +54,12 @@ public class AddCommand implements CommandExecutor {
     }
 
 	private CERTI initialiseCerti(List<String> EmployeeInfo) {
-		CERTI certi = null;
-    	if(EmployeeInfo.get(5) == "ADV")
+		CERTI certi = CERTI.ADV;
+    	if(EmployeeInfo.get(5).equals("ADV"))
     		certi = CERTI.ADV;
-    	else if(EmployeeInfo.get(5) == "PRO")
+    	else if(EmployeeInfo.get(5).equals("PRO"))
     		certi = CERTI.PRO;
-    	else if(EmployeeInfo.get(5) == "EX")
+    	else if(EmployeeInfo.get(5).equals("EX"))
     		certi = CERTI.EX;
 		return certi;
 	}

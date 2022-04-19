@@ -14,6 +14,7 @@ public class EmployeeManager {
     final private EmployeeDB db = new EmployeeDB();
     final private CommandFactory commandFactory = new CommandFactory();
     final private FilePrinter filePrinter = new FilePrinter();
+    final private ConsolePrinter consolePrinter = new ConsolePrinter();
 
     public void process(UserRequest request){
         try{

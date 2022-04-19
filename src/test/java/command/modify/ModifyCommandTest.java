@@ -205,7 +205,7 @@ public class ModifyCommandTest {
         UserRequest request = new UserRequest();
         request.setCommand(COMMAND.MOD);
         request.setArguments(Arrays.asList("name","LEE","phoneNum","4444-4444"));
-        request.setOptions(Arrays.asList("-l"," "," "));
+        request.setOptions(Arrays.asList("","-l"," "));
 
         List<Employee> beforeModified = modifyCommand.run(request,db);
         List<Employee> afterModified = db.findEmployeeByColumn("phoneNum","4444-4444");

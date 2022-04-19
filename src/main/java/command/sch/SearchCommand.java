@@ -29,12 +29,13 @@ public class SearchCommand implements CommandExecutor{
         return resultEmpList;
     }
 
-    private void makeColValOpt(UserRequest request) throws Exception{
+    private void makeColValOpt(UserRequest request){
 
         try {
             column = request.getArguments().get(0);
             value = request.getArguments().get(1);
-            option = request.getOptions().get(1);
+            if(request.getOptions().size() > 1)
+                option = request.getOptions().get(1);
         }
         catch (Exception e){
             System.out.println("Argument Input Error");

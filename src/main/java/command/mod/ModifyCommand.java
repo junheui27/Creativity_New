@@ -27,7 +27,7 @@ public class ModifyCommand implements CommandExecutor {
             Employee beforeModified = db.modifyEmployee(employee.getEmployeeNum(),employee);
             beforeModifiedEmployees.add(beforeModified);
         }
-        return beforeModifiedEmployees; //요구사항 - 수정 전 데이터를 출력해야 함
+        return beforeModifiedEmployees;
     }
 
     private void modifyEmployees(UserRequest request, List<Employee> employees) {

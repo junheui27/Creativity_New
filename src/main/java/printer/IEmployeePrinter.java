@@ -11,6 +11,7 @@ import printer.NonePrint.NonePrint;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public interface IEmployeePrinter {
 
@@ -22,20 +23,22 @@ public interface IEmployeePrinter {
         COMMAND command=request.getCommand();
         String outputPath=request.getOutputPath();
 
-        if(command.equals("ADD")){
+        List<Employee> filtered = results.stream().filter(e -> e.getEmployeeNum() != null).collect(Collectors.toList());
+
+        if(command.equals(COMMAND.ADD))
             return;
-        }
-        if(results.size()==0){
+        else if(filtered.size()==0){
             printer=new NonePrint();
         }
-        else if (options.get(0).equals("-p")){
+        else if (options.contains("-p")){
             printer=new DetailPrint();
         }
         else{
             printer=new BriefPrint();
         }
+
         try{
-            strResults=printer.print(command,results);
+            strResults=printer.print(command,filtered);
             printOption(outputPath,strResults);
 
         }catch (Exception e){
