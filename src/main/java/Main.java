@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class Main {
 
-    public static EmployeeManager manager = new EmployeeManager();
+    //public EmployeeManager manager = new EmployeeManager();
     private static String loadPath ="";
     private static String SavePath ="";
 
@@ -26,8 +26,6 @@ public class Main {
             List<String> outputs = run(inputs);
             writeOutput(SavePath,outputs);
         }
-
-
         System.out.println("finish");
     }
 
@@ -50,13 +48,20 @@ public class Main {
         return Pattern.matches(regx, str);
     }
 
-    public static void  run(List<String> inputs){
+    public static List<String> run(List<String> inputs){
+
+        EmployeeManager manager = new EmployeeManager();
+        List<String> outputResults = new ArrayList<>();
 
         for (String input : inputs){
             UserRequest request = UserRequestConverter.convert(input);
-            manager.process(request);
+            List<String> outputForOneInput = manager.process(request);
+            if(outputForOneInput != null && outputForOneInput.size() > 0){
+                outputResults.addAll(outputForOneInput);
+            }
         }
 
+        return outputResults;
     }
 
     public static List<String> readInput(String str) throws IOException {
@@ -75,7 +80,7 @@ public class Main {
     }
     
     public static  void writeOutput(String str, List<String> outputs) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./" + str));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./" + str,true));
 
         for(String str2 : outputs){
             bw.write(str2 + "\n");

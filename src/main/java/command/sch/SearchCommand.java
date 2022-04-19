@@ -34,8 +34,7 @@ public class SearchCommand implements CommandExecutor{
         try {
             column = request.getArguments().get(0);
             value = request.getArguments().get(1);
-            if(request.getOptions().size() > 1)
-                option = request.getOptions().get(1);
+            option = request.getOptions().get(1);
         }
         catch (Exception e){
             System.out.println("Argument Input Error");

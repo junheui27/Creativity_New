@@ -113,7 +113,7 @@ public class FilePrinterTest {
 
         //command , args 설정
         request.setCommand(COMMAND.SCH);
-        request.setOutputPath("output.txt");
+        //request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList("-p", " "," ")));
 
         filePrinter.print(request,results);
@@ -137,7 +137,7 @@ public class FilePrinterTest {
 
         //command , args 설정
         request.setCommand(COMMAND.SCH);
-        request.setOutputPath("output.txt");
+        //request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList("-p", " "," ")));
 
         filePrinter.print(request,results);
@@ -164,7 +164,7 @@ public class FilePrinterTest {
 
         //command , args 설정
         request.setCommand(COMMAND.SCH);
-        request.setOutputPath("output.txt");
+        //request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList(" ", " "," ")));
 
         filePrinter.print(request,results);

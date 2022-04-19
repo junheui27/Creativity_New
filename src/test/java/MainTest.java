@@ -53,7 +53,7 @@ class MainTest {
     @Test
     void runTest() throws IOException {
         List<String> array = Main.readInput("input.txt");
-        Main.run(array,"output.txt");
+        Main.run(array);
         List<String> result = new ArrayList();
         result.add("SCH,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
         result.add("DEL,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
