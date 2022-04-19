@@ -13,7 +13,7 @@ public class NonePrint implements IPrintOption {
     public List<String> print(COMMAND command,  List<Employee> results){
         List <String> strResults=new ArrayList<>();
 
-        strResults.add(command+",None");
+        strResults.add(command+",NONE");
 
         return strResults;
     }

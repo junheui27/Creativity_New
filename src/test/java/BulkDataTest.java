@@ -70,7 +70,7 @@ public class BulkDataTest {
         Main.writeOutput(outputFile.getPath(), inputResults);
 
         List<String> results = Main.readInput(outputFile.getPath());
-        Assertions.assertTrue(results.get(0).contains("SCH,None"));
+        Assertions.assertTrue(results.get(0).contains("SCH,NONE"));
         Assertions.assertTrue(results.get(1).contains("SCH,25165"));
         Assertions.assertTrue(results.get(2).contains("MOD,25165"));
         Assertions.assertTrue(results.get(3).contains("SCH,25165"));
@@ -96,7 +96,7 @@ public class BulkDataTest {
         Assertions.assertTrue(results.get(0).contains("SCH,1"));
         Assertions.assertTrue(results.get(1).contains("SCH,24887"));
         Assertions.assertTrue(results.get(3).contains("SCH,24888"));
-        Assertions.assertTrue(results.get(9).contains("SCH,None"));
+        Assertions.assertTrue(results.get(9).contains("SCH,NONE"));
     }
 
     @Test
@@ -116,12 +116,12 @@ public class BulkDataTest {
         Main.writeOutput(outputFile.getPath(), inputResults);
 
         List<String> results = Main.readInput(outputFile.getPath());
-        Assertions.assertTrue(results.get(0).contains("SCH,None"));
+        Assertions.assertTrue(results.get(0).contains("SCH,NONE"));
         Assertions.assertTrue(results.get(1).contains("SCH,33262"));
-        Assertions.assertTrue(results.get(2).contains("MOD,None"));
+        Assertions.assertTrue(results.get(2).contains("MOD,NONE"));
         Assertions.assertTrue(results.get(3).contains("SCH,33262"));
-        Assertions.assertTrue(results.get(4).contains("DEL,None"));
-        Assertions.assertTrue(results.get(5).contains("SCH,None"));
+        Assertions.assertTrue(results.get(4).contains("DEL,NONE"));
+        Assertions.assertTrue(results.get(5).contains("SCH,NONE"));
     }
 
     @Test
@@ -251,12 +251,12 @@ public class BulkDataTest {
 
         List<String> results = Main.readInput(outputFile.getPath());
         Assertions.assertTrue(results.get(0).contains("SCH,8304"));
-        Assertions.assertTrue(results.get(1).contains("SCH,None"));
+        Assertions.assertTrue(results.get(1).contains("SCH,NONE"));
         Assertions.assertTrue(results.get(2).contains("MOD,8304"));
         Assertions.assertTrue(results.get(3).contains("SCH,8304"));
         Assertions.assertTrue(results.get(4).contains("DEL,8304"));
         Assertions.assertTrue(results.get(5).contains("SCH,5"));
-        Assertions.assertTrue(results.get(6).contains("SCH,None"));
+        Assertions.assertTrue(results.get(6).contains("SCH,NONE"));
 
     }
 
@@ -278,7 +278,7 @@ public class BulkDataTest {
 
         List<String> results = Main.readInput(outputFile.getPath());
         Assertions.assertTrue(results.get(0).contains("SCH,3163"));
-        Assertions.assertTrue(results.get(1).contains("SCH,None"));
+        Assertions.assertTrue(results.get(1).contains("SCH,NONE"));
         Assertions.assertTrue(results.get(2).contains("MOD,3163"));
         Assertions.assertTrue(results.get(3).contains("SCH,3163"));
         Assertions.assertTrue(results.get(4).contains("DEL,3163"));
@@ -302,7 +302,7 @@ public class BulkDataTest {
 
         List<String> results = Main.readInput(outputFile.getPath());
         Assertions.assertTrue(results.get(0).contains("SCH,972"));
-        Assertions.assertTrue(results.get(1).contains("SCH,None"));
+        Assertions.assertTrue(results.get(1).contains("SCH,NONE"));
         Assertions.assertTrue(results.get(2).contains("MOD,972"));
         Assertions.assertTrue(results.get(3).contains("SCH,972"));
         Assertions.assertTrue(results.get(4).contains("DEL,972"));
