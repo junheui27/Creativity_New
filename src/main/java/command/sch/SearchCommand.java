@@ -8,27 +8,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-class RequestObj {
-    public String column;
-    public String value;
-    public String option;
-
-    public RequestObj(String column, String value, String option) {
-        this.column = column;
-        this.value = value;
-        this.option = option;
-    }
-}
 
 public class SearchCommand implements CommandExecutor{
+    private String column = "";
+    private String value = "";
+    private String option = "";
 
     @Override
     public List<Employee> run(UserRequest request, EmployeeDB db) throws Exception {
         List<Employee> resultEmpList = new ArrayList<>();
 
         if (isSearchCmd(request)) {
-            RequestObj reqObj = makeReqObj(request);
-            resultEmpList = SearchEmployeeList(reqObj, db);
+            makeColValOpt(request);
+            resultEmpList = SearchEmployeeList(column, value, option, db);
         }
         else{
             throw new Exception("SCH 명령어가 아닙니다.");
@@ -37,12 +29,16 @@ public class SearchCommand implements CommandExecutor{
         return resultEmpList;
     }
 
-    private RequestObj makeReqObj(UserRequest request) {
-        String column = request.getArguments().get(0);
-        String value = request.getArguments().get(1);
-        String option = request.getOptions().get(1);
+    private void makeColValOpt(UserRequest request) throws Exception{
 
-        return new RequestObj(column, value, option);
+        try {
+            column = request.getArguments().get(0);
+            value = request.getArguments().get(1);
+            option = request.getOptions().get(1);
+        }
+        catch (Exception e){
+            System.out.println("Argument Input Error");
+        }
     }
 
     private boolean isSearchCmd(UserRequest request) {
@@ -50,6 +46,7 @@ public class SearchCommand implements CommandExecutor{
     }
 
     private SearchFilter getEmployeeFilter(String column, String value, String option){
+
         if(column.equals("name"))
             return new EmployeeNameFilter(column, value, option);
         else if(column.equals("birthday"))
@@ -60,10 +57,10 @@ public class SearchCommand implements CommandExecutor{
             return new SearchFilter(column, value, option);
     }
 
-    List<Employee> SearchEmployeeList(RequestObj reqObj, EmployeeDB db) {
+    List<Employee> SearchEmployeeList(String column, String value, String option, EmployeeDB db) {
 
-        List<Employee> searchedEmployees = searchByColumnValue(reqObj.column, reqObj.value, db);
-        SearchFilter searchFilter = getEmployeeFilter(reqObj.column, reqObj.value, reqObj.option);
+        List<Employee> searchedEmployees = searchByColumnValue(column, value, db);
+        SearchFilter searchFilter = getEmployeeFilter(column, value, option);
         List<Employee> filterdEmployees = searchFilter.process(searchedEmployees);
 
         return filterdEmployees;
