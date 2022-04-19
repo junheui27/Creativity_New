@@ -24,8 +24,8 @@ public class Main {
         try{
             isValidInputFileExistTrue(loadPath);
             inputs = readInput(loadPath);
-            run(inputs);
-            //writeOutput("SavePath",outputs);
+            run(inputs,SavePath);
+
 
 
         }catch(Exception e) {
@@ -57,10 +57,11 @@ public class Main {
     	return Pattern.matches(regx, str);
     }
 
-    public static List<String> run(List<String> inputs) throws Exception {
+    public static List<String> run(List<String> inputs,String savePath) throws Exception {
 
         for (String input : inputs){
             UserRequest request = UserRequestConverter.convert(input);
+            request.setOutputPath(savePath);
             manager.process(request);
         }
         return inputs;
@@ -81,13 +82,4 @@ public class Main {
         return inputArray;
     }
 
-    public static  void writeOutput(String str, List<String> outputs) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("./" + str));
-
-        for(String str2 : outputs){
-            bw.write(str2 + "\n");
-        }
-        bw.flush();
-        bw.close();
-    }
 }

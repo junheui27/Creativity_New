@@ -72,23 +72,5 @@ class MainTest {
 //
 //    }
     
-    @Test
-    void WriteTest() throws IOException {
-        List<String> result = new ArrayList();
-        result.add("SCH,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
-        result.add("DEL,00000301,C CHOI,CL2,010-3412-5678,19940403,EX");
-        result.add("SCH,NONE");
-        result.add("MOD,00000302,CC CHOI,CL3,010-3412-5679,19950403,ADV");
-        result.add("SCH,2");
-        result.add("DEL,2");
-        result.add("MOD,09000302,FF MOON,CL1,010-1234-6666,19901131,ADV");
-        result.add("MOD,21000301,E KANG,CL1,010-1234-6785,19990111,ADV");
-        result.add("MOD,21000302,EE KANG,CL1,010-1234-6789,20000111,ADV");
-        result.add("DEL,99000102,AA LEE,CL4,010-1234-5679,19930101,EX");
-        result.add("MOD,00000302,CC CHOI,CL3,010-1111-2222,19950403,ADV");
-        result.add("SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO");
-        result.add("SCH,99100202,BB KIM,CL4,010-2341-5679,19920202,PRO");
 
-        Main.writeOutput("output.txt",result);
-    }
 }

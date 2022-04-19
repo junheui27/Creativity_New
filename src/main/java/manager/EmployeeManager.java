@@ -5,7 +5,7 @@ import command.factory.CommandFactory;
 import database.EmployeeDB;
 import model.Employee;
 import model.UserRequest;
-import printer.EmployeePrinter;
+import printer.EmployeePrinter.EmployeePrinter;
 
 import java.util.List;
 

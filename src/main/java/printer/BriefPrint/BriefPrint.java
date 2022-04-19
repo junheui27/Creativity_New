@@ -4,21 +4,18 @@ import model.COMMAND;
 import model.Employee;
 import printer.IPrintOption;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BriefPrint implements IPrintOption {
 
     @Override
-    public void print(COMMAND command,  List<Employee> results){
+    public List<String> print(COMMAND command,  List<Employee> results){
+        List <String> strResults=new ArrayList<>();
 
-        //ADD 커맨드시 출력없음
-        if (command.equals(COMMAND.ADD)){return;}
+        strResults.add(command+","+results.size());
 
-        //MOD, SCH, DEL 커맨드 -p옵션없으면 number 출력
-        String message=command+","+results.size();
-        System.out.println(message);
-
-
+        return strResults;
 
     }
 }
