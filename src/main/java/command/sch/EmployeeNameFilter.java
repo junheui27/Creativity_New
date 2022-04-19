@@ -9,20 +9,13 @@ import java.util.List;
 
 class EmployeeNameFilter extends SearchFilter {
 
-    private String column;
-    private String value;
-    private String option;
-
     EmployeeNameFilter(String column, String value, String option) {
         super(column, value, option);
-        this.column = column;
-        this.value = value;
-        this.option = option;
     }
 
     @Override
     public List<Employee> process(List<Employee> searchedEmployees) {
-        if(this.option.equals(" ") || this.option.equals("")){
+        if(option.equals(" ") || option.equals("")){
             return searchedEmployees;
         }
         return searchByValue(searchedEmployees);
@@ -31,7 +24,7 @@ class EmployeeNameFilter extends SearchFilter {
     @Override
     public String findValueByOption(String str) {
 
-        switch (this.option) {
+        switch (option) {
             case "-f":
                 return str.substring(0, str.indexOf(" "));
             case "-l":
@@ -48,7 +41,7 @@ class EmployeeNameFilter extends SearchFilter {
         for (Employee itrEmployee : searchedEmployees) {
             String itrtName = findValueByOption(itrEmployee.getName());
 
-            if (this.value.equals(itrtName)) {
+            if (value.equals(itrtName)) {
                 resultList.add(itrEmployee);
             }
         }
