@@ -11,6 +11,10 @@ public class NonePrint implements IPrintOption {
 
     //None 방식의 경우 "<command>,NONE" 으로출력
     public List<String> print(COMMAND command,  List<Employee> results){
-        return new ArrayList<String>();
+        List <String> strResults=new ArrayList<>();
+
+        strResults.add(command+",None");
+
+        return strResults;
     }
 }

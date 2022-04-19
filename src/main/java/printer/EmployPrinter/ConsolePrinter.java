@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeePrinter implements IEmployeePrinter {
+public class ConsolePrinter implements IEmployeePrinter {
 
 
     public void printOption(String outputPath,List<String> strResults)throws IOException {

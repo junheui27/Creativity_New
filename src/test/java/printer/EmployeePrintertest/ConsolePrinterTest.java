@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import printer.EmployPrinter.EmployeePrinterWR;
+import printer.EmployPrinter.ConsolePrinter;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EmployeePrinterWRTest {
+public class ConsolePrinterTest {
 
     private Employee employee1;
     private Employee employee2;
@@ -24,7 +25,7 @@ public class EmployeePrinterWRTest {
     private Employee employee6;
     private UserRequest request;
     private List<Employee> results;
-    private EmployeePrinterWR employeePrinterWR;
+    private ConsolePrinter consolePrinter;
 
 
     private final PrintStream standardOut = System.out;
@@ -39,7 +40,7 @@ public class EmployeePrinterWRTest {
     @BeforeEach
     public void setting(){
 
-        employeePrinterWR = new EmployeePrinterWR();
+        consolePrinter = new ConsolePrinter();
 
         request=new UserRequest();
 
@@ -113,10 +114,9 @@ public class EmployeePrinterWRTest {
 
         //command , args 설정
         request.setCommand(COMMAND.SCH);
-        request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList("-p", " "," ")));
 
-        employeePrinterWR.print(request,results);
+        consolePrinter.print(request,results);
         Assertions.assertEquals("SCH,NONE", outputStreamCaptor.toString().trim());
     }
 
@@ -140,7 +140,7 @@ public class EmployeePrinterWRTest {
         request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList("-p", " "," ")));
 
-        employeePrinterWR.print(request,results);
+        consolePrinter.print(request,results);
         Assertions.assertEquals("SCH,69999999,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
                 "SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
                 "SCH,99999999,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
@@ -167,7 +167,7 @@ public class EmployeePrinterWRTest {
         request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList(" ", " "," ")));
 
-        employeePrinterWR.print(request,results);
+        consolePrinter.print(request,results);
         Assertions.assertEquals("SCH,6", outputStreamCaptor.toString().trim());
     }
 
