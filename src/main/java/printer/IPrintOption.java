@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface IPrintOption {
 
-    default void print(COMMAND command, List<Employee> results){
-
-    }
+    public void print(COMMAND command, List<Employee> results);
 }
