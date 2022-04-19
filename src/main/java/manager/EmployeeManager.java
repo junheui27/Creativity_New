@@ -13,14 +13,14 @@ import java.util.List;
 public class EmployeeManager {
     final private EmployeeDB db = new EmployeeDB();
     final private CommandFactory commandFactory = new CommandFactory();
-    final private FilePrinter filePrinter = new FilePrinter();
+    final private FilePrinter printer = new FilePrinter();
     final private ConsolePrinter consolePrinter = new ConsolePrinter();
 
     public void process(UserRequest request){
         try{
             CommandExecutor executor = commandFactory.getCommand(request);
             List<Employee> results = executor.run(request,db);
-            filePrinter.print(request,results);
+            printer.print(request,results);
         }
         catch (Exception e){
             e.printStackTrace();
