@@ -13,11 +13,11 @@ import java.util.List;
 
 public class ConsolePrinter implements IEmployeePrinter {
 
-
-    public void printOption(String outputPath,List<String> strResults)throws IOException {
+    public List<String> printOption(List<String> strResults)throws IOException {
         for(String str: strResults){
             System.out.println(str);
         }
+        return null;
 
     }
 

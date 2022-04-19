@@ -15,18 +15,17 @@ import java.util.stream.Collectors;
 
 public interface IEmployeePrinter {
 
-    default void print(UserRequest request, List<Employee> results){
+    default List<String> print(UserRequest request, List<Employee> results){
         IPrintOption printer;
         List<String> options=request.getOptions();
         List<String> strResults;
 
         COMMAND command=request.getCommand();
-        String outputPath=request.getOutputPath();
 
         List<Employee> filtered = results.stream().filter(e -> e.getEmployeeNum() != null).collect(Collectors.toList());
 
         if(command.equals(COMMAND.ADD))
-            return;
+            return null;
         else if(filtered.size()==0){
             printer=new NonePrint();
         }
@@ -39,14 +38,15 @@ public interface IEmployeePrinter {
 
         try{
             strResults=printer.print(command,filtered);
-            printOption(outputPath,strResults);
+            return printOption(strResults);
 
         }catch (Exception e){
             System.out.println(e);
         }
+        return null;
 
 
     }
-    void printOption(String outputPath, List<String> outputs)throws IOException;
+    List<String> printOption( List<String> outputs)throws IOException;
 
 }
