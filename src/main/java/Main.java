@@ -19,45 +19,44 @@ public class Main {
         loadPath = arg[0];
         SavePath = arg[1];
         List<String> inputs = new ArrayList<String>();
-        
+
         if(isValidInputFileExistTrue(loadPath)) 
         {
         	inputs = readInput(loadPath);
             List<String> outputs = run(inputs);
-            
-            
-            writeOutput("SavePath",outputs);
+            writeOutput(SavePath,outputs);
         }
+
 
         System.out.println("finish");
     }
-    
+
 
     static boolean isValidInputFileExistTrue(String str) {
-    	File file = new File("./"+str); 
-    	return file.exists();
+        File file = new File("./"+str);
+        return file.exists();
     }
 
 
-    
+
     static boolean isValidInputFormatTrue(String str) {
-    	String regx = "^[A-Z]{3}\\,.*";
-    	return Pattern.matches(regx, str);
+        String regx = "^[A-Z]{3}\\,.*";
+        return Pattern.matches(regx, str);
     }
 
 
     static boolean isValidOutputFormatTrue(String str) {
-    	String regx = "^[A-Z]{3}\\,.*";
-    	return Pattern.matches(regx, str);
+        String regx = "^[A-Z]{3}\\,.*";
+        return Pattern.matches(regx, str);
     }
 
-    public static List<String> run(List<String> inputs){
+    public static void  run(List<String> inputs){
 
         for (String input : inputs){
             UserRequest request = UserRequestConverter.convert(input);
-            //manager.process(request);
+            manager.process(request);
         }
-        return inputs;
+
     }
 
     public static List<String> readInput(String str) throws IOException {
@@ -68,13 +67,13 @@ public class Main {
 
         while((str2 = br.readLine())!=null){
             if(isValidInputFormatTrue(str2))
-            	inputArray.add(str2);
+                inputArray.add(str2);
         }
         br.close();
 
         return inputArray;
     }
-
+    
     public static  void writeOutput(String str, List<String> outputs) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter("./" + str));
 
