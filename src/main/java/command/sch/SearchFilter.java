@@ -6,9 +6,9 @@ import java.util.List;
 
 public class SearchFilter implements SearchFilterI{
 
-    private String column;
-    private String value;
-    private String option;
+    protected String column;
+    protected String value;
+    protected String option;
 
      SearchFilter(String column, String value, String option){
         this.column = column;
