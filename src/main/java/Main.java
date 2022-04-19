@@ -1,4 +1,6 @@
 import manager.EmployeeManager;
+import model.UserRequest;
+import model.UserRequestConverter;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -53,8 +55,8 @@ public class Main {
     public static List<String> run(List<String> inputs){
 
         for (String input : inputs){
-            //UserRequest request = UserRequestConverter.convert(input);
-            //manager.process(request);
+            UserRequest request = UserRequestConverter.convert(input);
+            manager.process(request);
         }
         return inputs;
     }
