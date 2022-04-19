@@ -21,13 +21,13 @@ public class UserRequestConverter {
 
 
     public static boolean isValidCommandTrue(String str) {
-    	return str.contains("ADD") || str.contains("DEL") || str.contains("MOD") || str.contains("SCH");
+    	return str.equals("ADD") || str.equals("DEL") || str.equals("MOD") || str.equals("SCH");
     }
 
     public static boolean isValidnameTrue(String str, String option) {
 
     	String regx_name = "^[A-Z]*\\s[A-Z]*$";
-    	if(option.contains("-f") || option.contains("-l")) regx_name = "^[A-Z]*$";
+    	if(option.equals("-f") || option.equals("-l")) regx_name = "^[A-Z]*$";
     	return Pattern.matches(regx_name, str) && str.length() <= 15;
     }
     
@@ -37,21 +37,21 @@ public class UserRequestConverter {
     }
     
     public static boolean isValidphoneNumTrue(String str, String option) {
-    	String regx_phone = "^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$";
-    	if(option.contains("-m") || option.contains("-l")) regx_phone = "^\\d{4}$";
+    	String regx_phone = "^010-(?:\\d{3}|\\d{4})-\\d{4}$";
+    	if(option.equals("-m") || option.equals("-l")) regx_phone = "^\\d{4}$";
     	return Pattern.matches(regx_phone, str);
     }
     
     public static boolean isValidbirthdaytTrue(String str, String option) {
     	String regx_brith = "^[12]\\d{7}$";
-    	if(option.contains("-y")) regx_brith = "^[12]\\d{3}$";
-    	else if(option.contains("-m")) regx_brith = "^\\d{2}$";
-    	else if(option.contains("-d")) regx_brith = "^\\d{2}$";
+    	if(option.equals("-y")) regx_brith = "^[12]\\d{3}$";
+    	else if(option.equals("-m")) regx_brith = "^\\d{2}$";
+    	else if(option.equals("-d")) regx_brith = "^\\d{2}$";
     	return Pattern.matches(regx_brith, str);
     }
     
     public static boolean isValidcertiTrue(String str) {
-    	return str.contains("PRO") || str.contains("ADV") || str.contains("EX");
+    	return str.equals("PRO") || str.equals("ADV") || str.equals("EX");
     }
     
     public static boolean isValidemployeeNumTrue(String str) {
@@ -60,24 +60,25 @@ public class UserRequestConverter {
     }
     
     public static boolean isValidAddArgsTrue(String[] str) {
-    	return isValidemployeeNumTrue(str[4]) && isValidnameTrue(str[5],str[2]) && isValidclTrue(str[6])
-    			&& isValidphoneNumTrue(str[7],str[2]) && isValidbirthdaytTrue(str[8],str[2]) && isValidcertiTrue(str[9]);
+    	String option = "";
+    	return isValidemployeeNumTrue(str[4]) && isValidnameTrue(str[5],option) && isValidclTrue(str[6])
+    			&& isValidphoneNumTrue(str[7],option) && isValidbirthdaytTrue(str[8],option) && isValidcertiTrue(str[9]);
     }
 
     public static boolean isValidFirstArgsTrue(String str) {
-    	if(str.contains("employeeNum")||str.contains("name")||str.contains("cl")||
-    			str.contains("phoneNum")||str.contains("birth")||str.contains("certi")) return true;
+    	if(str.equals("employeeNum")||str.equals("name")||str.equals("cl")||
+    			str.equals("phoneNum")||str.equals("birthday")||str.equals("certi")) return true;
     	return false;
     }
 
     public static boolean isValidSecondArgsTrue(String str1,String str2, String option) {
 
-    	if(str1.contains("employeeNum")) return isValidemployeeNumTrue(str2);
-    	else if(str1.contains("name")) return isValidnameTrue(str2,option);
-    	else if(str1.contains("cl")) return isValidclTrue(str2);
-    	else if(str1.contains("phoneNum")) return isValidphoneNumTrue(str2,option);
-    	else if(str1.contains("birth")) return isValidbirthdaytTrue(str2,option);
-    	else if(str1.contains("certi")) return isValidcertiTrue(str2);
+    	if(str1.equals("employeeNum")) return isValidemployeeNumTrue(str2);
+    	else if(str1.equals("name")) return isValidnameTrue(str2,option);
+    	else if(str1.equals("cl")) return isValidclTrue(str2);
+    	else if(str1.equals("phoneNum")) return isValidphoneNumTrue(str2,option);
+    	else if(str1.equals("birthday")) return isValidbirthdaytTrue(str2,option);
+    	else if(str1.equals("certi")) return isValidcertiTrue(str2);
     	return false;
     }
     
@@ -96,6 +97,7 @@ public class UserRequestConverter {
 
     public static List<String> getArgument(String []str) {
     	List<String> Argument = new ArrayList();
+    	String option = str[2];
 
     	if(str[0].contains("ADD") && isValidAddArgsTrue(str)) {
         	for(int index = 4 ; index < str.length ; index++) {
@@ -103,21 +105,22 @@ public class UserRequestConverter {
         	}
     	}
     	else if((str[0].contains("DEL") || str[0].contains("SCH"))){
-    		if(isValidFirstArgsTrue(str[4])) 
+
+    		if(isValidFirstArgsTrue(str[4]) && isValidSecondArgsTrue(str[4],str[5],option)) {
     			Argument.add(str[4]);
-    		if(isValidSecondArgsTrue(str[4],str[5],str[2])) 
     			Argument.add(str[5]);
+    		}
     	}
     	else if(str[0].contains("MOD")) {
 
-    		if(isValidFirstArgsTrue(str[4])) 
+    		if(isValidFirstArgsTrue(str[4]) && isValidSecondArgsTrue(str[4],str[5],option)) {
     			Argument.add(str[4]);
-    		if(isValidSecondArgsTrue(str[4],str[5],str[2])) 
     			Argument.add(str[5]);
-    		if(isValidFirstArgsTrue(str[6])) 
+    		}
+    		if(isValidFirstArgsTrue(str[6]) && isValidSecondArgsTrue(str[6],str[7],option)) {
     			Argument.add(str[6]);
-    		if(isValidSecondArgsTrue(str[6],str[7],str[2])) 
     			Argument.add(str[7]);
+    		}
     	}
     	return Argument;
     }
@@ -125,7 +128,7 @@ public class UserRequestConverter {
     public static List<String> getOption(String []str) {
 	   	 List<String> Argument = new ArrayList();
 		 
-	   	for(int index = 1 ; index < 3 ; index++) {
+	   	for(int index = 1 ; index <= 3 ; index++) {
 	   		if(isValidOptionTrue(str[index]))
 	   			Argument.add(str[index]);
 	   	}
