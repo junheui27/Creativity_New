@@ -17,7 +17,7 @@ public class AddCommand implements CommandExecutor {
     		return new ArrayList();
     	
     	
-    	//형식 : ADD,,,,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO
+    	//양식 : ADD,,,,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO
     	List<String> EmployeeInfo = request.getArguments();
     	CAREERLEVEL careerLevel = null;
     	if(EmployeeInfo.get(2).equals("CL1"))
@@ -34,7 +34,9 @@ public class AddCommand implements CommandExecutor {
     	Employee employee = new Employee();
     	employee.setEmployeeNum(EmployeeInfo.get(0));
     	employee.setName(EmployeeInfo.get(1));
+        employee.setPhoneNumber(EmployeeInfo.get(3));
         employee.setCl(careerLevel);
+        employee.setBirthday(EmployeeInfo.get(4));
         employee.setCerti(certi);
     	
         if(employee.getEmployeeNum().length() > 8) {
@@ -45,19 +47,19 @@ public class AddCommand implements CommandExecutor {
         	throw new Exception();
         }
         
-        List<Employee> employeeArr = new ArrayList<>();
+        List<Employee> employeeArr = new ArrayList<Employee>();
         employeeArr.add(employee);
         
         return employeeArr;
     }
 
 	private CERTI initialiseCerti(List<String> EmployeeInfo) {
-		CERTI certi = null;
-    	if(EmployeeInfo.get(5) == "ADV")
+		CERTI certi = CERTI.ADV;
+    	if(EmployeeInfo.get(5).equals("ADV"))
     		certi = CERTI.ADV;
-    	else if(EmployeeInfo.get(5) == "PRO")
+    	else if(EmployeeInfo.get(5).equals("PRO"))
     		certi = CERTI.PRO;
-    	else if(EmployeeInfo.get(5) == "EX")
+    	else if(EmployeeInfo.get(5).equals("EX"))
     		certi = CERTI.EX;
 		return certi;
 	}

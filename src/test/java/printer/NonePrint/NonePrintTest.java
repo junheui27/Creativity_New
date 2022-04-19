@@ -36,16 +36,9 @@ public class NonePrintTest {
         employee = new Employee(
                 "99000101",
                 "A LEE",
-                "LEE",
-                "A",
                 "010-1234-5678",
-                "1234",
-                "5678",
                 CAREERLEVEL.CL3,
                 "19920101",
-                "1992",
-                "01",
-                "01",
                 CERTI.PRO
 
         );
