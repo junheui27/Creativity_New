@@ -117,7 +117,8 @@ public class UserRequestConverter {
     			Argument.add(str[4]);
     			Argument.add(str[5]);
     		}
-    		if(isValidFirstArgsTrue(str[6]) && isValidSecondArgsTrue(str[6],str[7],option)) {
+    		//if(isValidFirstArgsTrue(str[6]) && isValidSecondArgsTrue(str[6],str[7],option)) {
+			if(isValidFirstArgsTrue(str[6])){
     			Argument.add(str[6]);
     			Argument.add(str[7]);
     		}
@@ -129,7 +130,7 @@ public class UserRequestConverter {
 	   	 List<String> Argument = new ArrayList();
 		 
 	   	for(int index = 1 ; index <= 3 ; index++) {
-	   		if(isValidOptionTrue(str[index]) || str[index].isBlank())
+	   		if(isValidOptionTrue(str[index]) || str[index].isEmpty())
 	   			Argument.add(str[index]);
 	   	}
 	   	return Argument;

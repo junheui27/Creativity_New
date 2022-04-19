@@ -16,14 +16,15 @@ public class EmployeeManager {
     final private FilePrinter printer = new FilePrinter();
     final private ConsolePrinter consolePrinter = new ConsolePrinter();
 
-    public void process(UserRequest request){
+    public List<String> process(UserRequest request){
         try{
             CommandExecutor executor = commandFactory.getCommand(request);
             List<Employee> results = executor.run(request,db);
-            printer.print(request,results);
+            return printer.print(request,results);
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        return null;
     }
 }

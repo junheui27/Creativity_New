@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,7 +77,7 @@ class AddCommandTest {
 	}
 	
 	@Test
-	@DisplayName("[비정상Case] 사번 8자리 초과 Exception 발생")
+	@DisplayName("[비정상Case] 사번 8자리가 아니면 비어있는 리스트 반환")
 	void runTestFail2() throws Exception {
 		UserRequest ur = new UserRequest();
 		ArrayList<String> ArgumentList = new ArrayList();
@@ -95,9 +96,9 @@ class AddCommandTest {
 		ur.setOptions(optionList);
 		ur.setArguments(ArgumentList);
 		EmployeeDB employeeDB = new EmployeeDB();
-		
-	    assertThrows(Exception.class, () -> {
-	    	addCommand.run(ur, employeeDB);
-	    });
+
+		List<Employee> ret = addCommand.run(ur, employeeDB);
+		Assertions.assertTrue(ret.size()==0);
+
 	}
 }
