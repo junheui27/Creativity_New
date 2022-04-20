@@ -15,9 +15,6 @@ class EmployeeNameFilter extends SearchFilter {
 
     @Override
     public List<Employee> process(List<Employee> searchedEmployees) {
-        if(option.equals(" ") || option.equals("")){
-            return searchedEmployees;
-        }
         return searchByValue(searchedEmployees);
     }
 
