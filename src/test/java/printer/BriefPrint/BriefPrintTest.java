@@ -6,7 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import printer.IPrintOption;
+import printer.NonePrint.NonePrint;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -21,12 +23,6 @@ public class BriefPrintTest {
     private Employee employee;
     public List<Employee> results;
     private final PrintStream standardOut = System.out;
-    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-
-    @BeforeEach
-    public void setUp() {
-        System.setOut(new PrintStream(outputStreamCaptor));
-    }
 
 
     @BeforeEach
@@ -47,15 +43,12 @@ public class BriefPrintTest {
 
     }
     @Test
-    @DisplayName("ADD 명령어 실행시, 출력안됨")
+    @DisplayName("ADD 명령어 실행시, 그대로 넘김,윗단에서처리")
     void addTest(){
 
-        IPrintOption briefPrinter=mock(BriefPrint.class);
-        doNothing().when(briefPrinter).print(COMMAND.ADD,results);
-        briefPrinter.print(COMMAND.ADD,results);
-
-        //호출확인. 출력안됨
-        verify(briefPrinter,times(1)).print(COMMAND.ADD, results);
+        IPrintOption Printer=new BriefPrint();
+        List<String>re=Printer.print(COMMAND.ADD, results);
+        Assertions.assertEquals("ADD,1", re.get(0));
 
 
     }
@@ -64,9 +57,9 @@ public class BriefPrintTest {
     void modTest(){
 
 
-        IPrintOption briefPrinter=new BriefPrint();
-        briefPrinter.print(COMMAND.MOD, results);
-        Assertions.assertEquals("MOD,1", outputStreamCaptor.toString().trim());
+        IPrintOption Printer=new BriefPrint();
+        List<String>re=Printer.print(COMMAND.MOD, results);
+        Assertions.assertEquals("MOD,1", re.get(0));
 
     }
 
@@ -74,18 +67,18 @@ public class BriefPrintTest {
     @DisplayName("SCH 명령어 실행시, brief 출력확인")
     void schTest(){
 
-        IPrintOption briefPrinter=new BriefPrint();
-        briefPrinter.print(COMMAND.SCH, results);
-        Assertions.assertEquals("SCH,1", outputStreamCaptor.toString().trim());
+        IPrintOption Printer=new BriefPrint();
+        List<String>re=Printer.print(COMMAND.SCH, results);
+        Assertions.assertEquals("SCH,1", re.get(0));
 
     }
     @Test
     @DisplayName("DEL 명령어 실행시, brief 출력확인")
     void delTest(){
 
-        IPrintOption briefPrinter=new BriefPrint();
-        briefPrinter.print(COMMAND.DEL, results);
-        Assertions.assertEquals("DEL,1", outputStreamCaptor.toString().trim());
+        IPrintOption Printer=new BriefPrint();
+        List<String>re=Printer.print(COMMAND.DEL, results);
+        Assertions.assertEquals("DEL,1", re.get(0));
 
     }
 }

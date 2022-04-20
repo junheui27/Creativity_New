@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import printer.IPrintOption;
+import printer.NonePrint.NonePrint;
 
 
 import java.io.ByteArrayOutputStream;
@@ -21,12 +22,7 @@ public class DetailPrintTest {
     private Employee employee;
     public List<Employee> results;
     private final PrintStream standardOut = System.out;
-    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
-    @BeforeEach
-    public void setUp() {
-        System.setOut(new PrintStream(outputStreamCaptor));
-    }
 
 
     @BeforeEach
@@ -47,15 +43,12 @@ public class DetailPrintTest {
 
     }
     @Test
-    @DisplayName("ADD 명령어 실행시, 출력안됨")
+    @DisplayName("ADD 명령어 실행시, 그대로 넘김,윗단에서처리")
     void addTest(){
 
-        IPrintOption detailPrinter=mock(DetailPrint.class);
-        doNothing().when(detailPrinter).print(COMMAND.ADD,results);
-        detailPrinter.print(COMMAND.ADD,results);
-
-        //호출확인. 출력안됨
-        verify(detailPrinter,times(1)).print(COMMAND.ADD, results);
+        IPrintOption Printer=new DetailPrint();
+        List<String>re=Printer.print(COMMAND.ADD, results);
+        Assertions.assertEquals("ADD,99000101,A LEE,CL3,010-1234-5678,19920101,PRO", re.get(0));
 
 
     }
@@ -64,9 +57,9 @@ public class DetailPrintTest {
     void modTest(){
 
 
-        IPrintOption detailPrinter=new DetailPrint();
-        detailPrinter.print(COMMAND.MOD, results);
-        Assertions.assertEquals("MOD,99000101,A LEE,CL3,010-1234-5678,19920101,PRO", outputStreamCaptor.toString().trim());
+        IPrintOption Printer=new DetailPrint();
+        List<String>re=Printer.print(COMMAND.MOD, results);
+        Assertions.assertEquals("MOD,99000101,A LEE,CL3,010-1234-5678,19920101,PRO",  re.get(0));
 
     }
 
@@ -74,18 +67,18 @@ public class DetailPrintTest {
     @DisplayName("SCH 명령어 실행시, detail 출력확인")
     void schTest(){
 
-        IPrintOption detailPrinter=new DetailPrint();
-        detailPrinter.print(COMMAND.SCH, results);
-        Assertions.assertEquals("SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO", outputStreamCaptor.toString().trim());
+        IPrintOption Printer=new DetailPrint();
+        List<String>re=Printer.print(COMMAND.SCH, results);
+        Assertions.assertEquals("SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO",  re.get(0));
 
     }
     @Test
     @DisplayName("DEL 명령어 실행시, detail 출력확인")
     void delTest(){
 
-        IPrintOption detailPrinter=new DetailPrint();
-        detailPrinter.print(COMMAND.DEL, results);
-        Assertions.assertEquals("DEL,99000101,A LEE,CL3,010-1234-5678,19920101,PRO", outputStreamCaptor.toString().trim());
+        IPrintOption Printer=new DetailPrint();
+        List<String>re=Printer.print(COMMAND.DEL, results);
+        Assertions.assertEquals("DEL,99000101,A LEE,CL3,010-1234-5678,19920101,PRO",  re.get(0));
 
     }
 }

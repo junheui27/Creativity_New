@@ -22,12 +22,6 @@ public class NonePrintTest {
     private Employee employee;
     public List<Employee> results;
     private final PrintStream standardOut = System.out;
-    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-
-    @BeforeEach
-    public void setUp() {
-        System.setOut(new PrintStream(outputStreamCaptor));
-    }
 
 
     @BeforeEach
@@ -48,16 +42,12 @@ public class NonePrintTest {
 
     }
     @Test
-    @DisplayName("ADD 명령어는 출력되지 않으며 출력 옵션도 사용하지 않는다")
+    @DisplayName("ADD 명령어는 그대로 넘김,윗단에서처리")
     void addTest(){
 
-        IPrintOption nonePrinter=mock(NonePrint.class);
-        doNothing().when(nonePrinter).print(COMMAND.ADD,results);
-        nonePrinter.print(COMMAND.ADD,results);
-
-        //호출확인. 출력안됨
-        verify(nonePrinter,times(1)).print(COMMAND.ADD, results);
-
+        IPrintOption nonePrinter=new NonePrint();
+        List<String>re=nonePrinter.print(COMMAND.ADD, results);
+        Assertions.assertEquals("ADD,NONE", re.get(0));
 
     }
     @Test
@@ -66,8 +56,8 @@ public class NonePrintTest {
 
 
         IPrintOption nonePrinter=new NonePrint();
-        nonePrinter.print(COMMAND.MOD, results);
-        Assertions.assertEquals("MOD,NONE", outputStreamCaptor.toString().trim());
+        List<String>re=nonePrinter.print(COMMAND.MOD, results);
+        Assertions.assertEquals("MOD,NONE", re.get(0));
 
     }
 
@@ -77,8 +67,8 @@ public class NonePrintTest {
 
 
         IPrintOption nonePrinter=new NonePrint();
-        nonePrinter.print(COMMAND.MOD, results);
-        Assertions.assertEquals("SCH,NONE", outputStreamCaptor.toString().trim());
+        List<String>re=nonePrinter.print(COMMAND.SCH, results);
+        Assertions.assertEquals("SCH,NONE", re.get(0));
 
     }
     @Test
@@ -87,8 +77,8 @@ public class NonePrintTest {
 
 
         IPrintOption nonePrinter=new NonePrint();
-        nonePrinter.print(COMMAND.MOD, results);
-        nonePrinter.print(COMMAND.DEL, results);
+        List<String>re=nonePrinter.print(COMMAND.DEL, results);
+        Assertions.assertEquals("DEL,NONE", re.get(0));
 
     }
 }

@@ -116,8 +116,10 @@ public class FilePrinterTest {
         //request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList("-p", " "," ")));
 
-        filePrinter.print(request,results);
-        Assertions.assertEquals("SCH,NONE", outputStreamCaptor.toString().trim());
+        List<String>re=filePrinter.print(request,results);
+
+        Assertions.assertEquals(re.get(0),"");
+
     }
 
 
@@ -140,12 +142,12 @@ public class FilePrinterTest {
         //request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList("-p", " "," ")));
 
-        filePrinter.print(request,results);
-        Assertions.assertEquals("SCH,69999999,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
-                "SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
-                "SCH,99999999,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
-                "SCH,00000000,A LEE,CL3,010-1234-5678,19920101,PRO\r\n" +
-                "SCH,00000101,A LEE,CL3,010-1234-5678,19920101,PRO", outputStreamCaptor.toString().trim());
+        List<String>re=filePrinter.print(request,results);
+        Assertions.assertEquals(re.get(0),"SCH,69999999,A LEE,CL3,010-1234-5678,19920101,PRO");
+        Assertions.assertEquals(re.get(1),"SCH,99000101,A LEE,CL3,010-1234-5678,19920101,PRO");
+        Assertions.assertEquals(re.get(2),"SCH,99999999,A LEE,CL3,010-1234-5678,19920101,PRO");
+        Assertions.assertEquals(re.get(3),"SCH,00000000,A LEE,CL3,010-1234-5678,19920101,PRO");
+        Assertions.assertEquals(re.get(4),"SCH,00000101,A LEE,CL3,010-1234-5678,19920101,PRO");
 
 
     }
@@ -167,8 +169,8 @@ public class FilePrinterTest {
         //request.setOutputPath("output.txt");
         request.setOptions(new ArrayList<>(Arrays.asList(" ", " "," ")));
 
-        filePrinter.print(request,results);
-        Assertions.assertEquals("SCH,6", outputStreamCaptor.toString().trim());
+        List<String>re=filePrinter.print(request,results);
+        Assertions.assertEquals(re.get(0),"SCH,6");
     }
 
 }
